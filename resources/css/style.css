@@ -1,0 +1,119 @@
+/*******************************************************************************
+ *                                                                             *
+ * Font			                                                               *
+ *                                                                             *
+ ******************************************************************************/
+
+@font-face {
+    font-family: OpenSans;
+    src: url('/fonts/OpenSans-Bold.ttf');
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Button  			                                                           *
+ *                                                                             *
+ ******************************************************************************/
+
+.pesanan-button {
+    -fx-graphic: url('/icons/icons8-shopping-cart-20.png');
+}
+
+.pesanan-button:hover {
+    -fx-graphic: url('/icons/icons8-shopping-cart-20-white.png');
+    -fx-background-color: #FCB623;
+    -fx-text-fill: white;
+}
+
+.tambah-pesanan-button {
+    -fx-graphic: url('/icons/icons8-add-shopping-cart-30.png');
+    -fx-font-family: 'OpenSans';
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.button-header:hover {
+    -fx-background-color: #EAEAEA;
+}
+
+.button-header-pressed {
+    -fx-background-color: #FCB623;
+    -fx-text-fill: white;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Text 			                                                           *
+ *                                                                             *
+ ******************************************************************************/
+
+.text-body {
+    -fx-font-family: 'OpenSans';
+    -fx-font-size: 12pt;
+}
+
+.nama-ramen {
+    -fx-font-size: 20pt;
+}
+
+.harga-ramen {
+    -fx-font-size: 18pt;
+}
+
+.text-white {
+    -fx-text-fill: white;
+}
+
+.text-bold {
+    -fx-font-weight: bold;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Component   		                                                           *
+ *                                                                             *
+ ******************************************************************************/
+
+.jfx-combo-box {
+    -fx-font-family: 'OpenSans';
+    -fx-font-size: 14pt;
+    -fx-prompt-text-fill: white;
+    -fx-text-fill: white;
+}
+
+.combo-box > .list-cell {
+    -fx-text-fill: white;
+}
+
+.combo-box .arrow {
+    -fx-background-color: white;
+}
+
+.jfx-text-field {
+    -fx-font-family: 'OpenSans';
+    -fx-font-size: 14pt;
+    -fx-prompt-text-fill: white;
+    -fx-text-fill: white;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Pane 			                                                           *
+ *                                                                             *
+ ******************************************************************************/
+
+.body-ramen-pane0 {
+    -fx-background-color: #FCB623;
+}
+
+.body-ramen-pane1 {
+    -fx-background-color: #F9564F;
+}
+
+.body-ramen-pane2 {
+    -fx-background-color: #B33F62;
+}
+
+.body-ramen-pane3 {
+    -fx-background-color: #0C0A3E;
+}
