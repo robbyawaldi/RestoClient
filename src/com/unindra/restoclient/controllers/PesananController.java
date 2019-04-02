@@ -1,24 +1,21 @@
 package com.unindra.restoclient.controllers;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTreeTableView;
-import com.jfoenix.controls.RecursiveTreeItem;
+import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import com.unindra.restoclient.Rupiah;
 import com.unindra.restoclient.models.Item;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static com.unindra.restoclient.models.DaftarMenu.menu;
-import static com.unindra.restoclient.models.Item.getItems;
+import static com.unindra.restoclient.models.Item.items;
 
 public class PesananController implements Initializable {
 
@@ -29,8 +26,8 @@ public class PesananController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         TreeTableColumn<Item, String> namaCol = new TreeTableColumn<>("Nama");
         TreeTableColumn<Item, Integer> jumlahCol = new TreeTableColumn<>("Jumlah");
-        TreeTableColumn<Item, Integer> hargaCol = new TreeTableColumn<>("Harga");
-        TreeTableColumn<Item, Integer> totalCol = new TreeTableColumn<>("Total");
+        TreeTableColumn<Item, String> hargaCol = new TreeTableColumn<>("Harga");
+        TreeTableColumn<Item, String> totalCol = new TreeTableColumn<>("Total");
         TreeTableColumn<Item, String> hapusCol = new TreeTableColumn<>("Hapus");
 
         namaCol.setCellValueFactory(param -> menu(param.getValue().getValue()).namaProperty());
@@ -52,34 +49,47 @@ public class PesananController implements Initializable {
                             setGraphic(null);
                             setText(null);
                         } else {
+                            button.setStyle("-fx-background-color: #EAEAEA");
                             button.setOnAction(event -> {
-                                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                                alert.setTitle("Pesanan");
-                                alert.setHeaderText("Hapus pesanan");
-                                alert.setContentText("Anda yakin ingin menghapus pesanan ini?");
-
                                 Stage primaryStage = (Stage) pesananTableView.getScene().getWindow();
-                                alert.setX(primaryStage.getX() + 100);
-                                alert.setY(primaryStage.getY() + 100);
+                                JFXAlert<String> alert = new JFXAlert<>(primaryStage);
+                                alert.initModality(Modality.APPLICATION_MODAL);
+                                alert.setOverlayClose(false);
 
-                                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                                stage.getIcons().add(new Image("/icons/logo-ramen-bulet-merah-copy20x20.png"));
+                                JFXDialogLayout layout = new JFXDialogLayout();
+                                layout.setHeading(new Label("Hapus Pesanan"));
+                                layout.setBody(new Label("Anda yakin ingin menghapus pesanan ini?"));
 
-                                Optional<ButtonType> optional = alert.showAndWait();
-                                if (optional.isPresent() && optional.get() == ButtonType.OK) {
-                                    getItems().remove(getIndex());
+                                JFXButton iyaButton = new JFXButton("Iya");
+                                iyaButton.setDefaultButton(true);
+                                iyaButton.setOnAction(evt -> {
+                                    alert.hideWithAnimation();
+                                    items().remove(getIndex());
                                     setTotalLabel();
-                                }
+                                });
+
+                                JFXButton BatalButton = new JFXButton("Batal");
+                                BatalButton.setCancelButton(true);
+                                BatalButton.setOnAction(evt -> alert.hideWithAnimation());
+
+                                layout.setActions(iyaButton, BatalButton);
+                                alert.setContent(layout);
+                                alert.show();
                             });
-                            setGraphic(button);
-                            setText(null);
+                            Item i = items().get(getIndex());
+                            if (!i.getStatus_item().equals("belum dipesan")) {
+                                setGraphic(null);
+                                setText(i.getStatus_item());
+                            } else {
+                                setGraphic(button);
+                                setText(null);
+                            }
                         }
                     }
                 };
             }
         });
-
-        TreeItem<Item> root = new RecursiveTreeItem<>(getItems(), RecursiveTreeObject::getChildren);
+        TreeItem<Item> root = new RecursiveTreeItem<>(items(), RecursiveTreeObject::getChildren);
         pesananTableView.setRoot(root);
         pesananTableView.getColumns().add(namaCol);
         pesananTableView.getColumns().add(jumlahCol);
@@ -92,6 +102,6 @@ public class PesananController implements Initializable {
     }
 
     private void setTotalLabel() {
-        totalLabel.setText(Rupiah.format(Item.getGrandTotal()));
+        totalLabel.setText(Rupiah.rupiah(Item.getGrandTotal()));
     }
 }

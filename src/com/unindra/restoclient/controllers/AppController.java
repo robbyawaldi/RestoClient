@@ -1,19 +1,29 @@
 package com.unindra.restoclient.controllers;
 
+import com.jfoenix.controls.JFXAlert;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialogLayout;
+import com.unindra.restoclient.models.DaftarMenu;
+import com.unindra.restoclient.models.Item;
+import com.unindra.restoclient.models.StatusResponse;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
+import java.util.List;
 import java.util.ResourceBundle;
+
+import static com.unindra.restoclient.models.Item.items;
 
 public class AppController implements Initializable {
     public JFXButton ramenButton;
@@ -23,76 +33,142 @@ public class AppController implements Initializable {
     public ScrollPane mainPane;
     public JFXButton pesananButton;
 
+    private VBox ramenPane;
+    private VBox minumanPane;
+    private VBox cemilanPane;
+    private VBox lainnyaPane;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/ramen.fxml"));
-            mainPane.setContent(root);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ramenPane = new VBox();
+        minumanPane = new VBox();
+        cemilanPane = new VBox();
+        lainnyaPane = new VBox();
+
+        setRamenPane(DaftarMenu.menus("ramen"));
+        setAllMenuPane(DaftarMenu.menus("minuman"), minumanPane, "body-minuman-pane");
+        setAllMenuPane(DaftarMenu.menus("cemilan"), cemilanPane, "body-cemilan-pane");
+        setAllMenuPane(DaftarMenu.menus("lainnya"), lainnyaPane, "body-lainnya-pane");
+
+        mainPane.setContent(ramenPane);
     }
 
-    public void menuHandle(ActionEvent actionEvent) throws IOException {
-        ramenButton.getStyleClass().set(2, "button-header");
-        minumanButton.getStyleClass().set(2, "button-header");
-        cemilanButton.getStyleClass().set(2, "button-header");
-        lainnyaButton.getStyleClass().set(2, "button-header");
+    public void menuHandle(ActionEvent actionEvent) {
+        ramenButton.getStyleClass().set(2, "ramen");
+        minumanButton.getStyleClass().set(2, "minuman");
+        cemilanButton.getStyleClass().set(2, "cemilan");
+        lainnyaButton.getStyleClass().set(2, "lainnya");
 
-        String fxmlName;
         if (actionEvent.getSource() == ramenButton) {
-            ramenButton.getStyleClass().set(2, "button-header-pressed");
-            fxmlName = "ramen";
+            ramenButton.getStyleClass().set(2, "ramen-pressed");
+            mainPane.setContent(ramenPane);
         } else if (actionEvent.getSource() == minumanButton) {
-            minumanButton.getStyleClass().set(2, "button-header-pressed");
-            fxmlName = "minuman";
+            minumanButton.getStyleClass().set(2, "minuman-pressed");
+            mainPane.setContent(minumanPane);
         } else if (actionEvent.getSource() == cemilanButton) {
-            cemilanButton.getStyleClass().set(2, "button-header-pressed");
-            fxmlName = "cemilan";
+            cemilanButton.getStyleClass().set(2, "cemilan-pressed");
+            mainPane.setContent(cemilanPane);
         } else if (actionEvent.getSource() == lainnyaButton) {
-            lainnyaButton.getStyleClass().set(2, "button-header-pressed");
-            fxmlName = "lainnya";
-        } else {
-            fxmlName = "ramen";
+            lainnyaButton.getStyleClass().set(2, "lainnya-pressed");
+            mainPane.setContent(lainnyaPane);
         }
-
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/" + fxmlName + ".fxml"));
-        mainPane.setContent(root);
     }
 
-    public void pesananHandle(ActionEvent actionEvent) throws IOException {
-        if (actionEvent.getSource() == pesananButton) {
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/pesanan.fxml"));
-            Stage primaryStage = (Stage) pesananButton.getScene().getWindow();
+    public void pesananHandle() throws IOException {
+        Stage primaryStage = (Stage) pesananButton.getScene().getWindow();
 
-            Alert alert = new Alert(Alert.AlertType.NONE);
-            alert.setTitle("Pesanan");
-            alert.setDialogPane((DialogPane) root);
-            alert.setX(primaryStage.getX() + pesananButton.getLayoutX() - 410);
-            alert.setY(primaryStage.getY() + pesananButton.getLayoutY() + 60);
+        JFXAlert<String> alert = new JFXAlert<>(primaryStage);
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.setOverlayClose(false);
 
-            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-            stage.getIcons().add(new Image("/icons/logo-ramen-bulet-merah-copy20x20.png"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/pesanan.fxml"));
 
-            ButtonType pesanButton = new ButtonType("Pesan");
-            ButtonType bayarButton = new ButtonType("Bayar");
-            ButtonType keluarButton = new ButtonType("Keluar", ButtonBar.ButtonData.CANCEL_CLOSE);
-            alert.getButtonTypes().setAll(pesanButton, bayarButton, keluarButton);
+        JFXDialogLayout layout = new JFXDialogLayout();
+        layout.setHeading(new Label("Pesanan"));
+        layout.setBody(root);
 
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == pesanButton) {
-                System.out.println("Pesan");
-            } else if (result.isPresent() && result.get() == bayarButton) {
-                System.out.println("Bayar");
-            } else {
-                System.out.println("Keluar");
+        JFXButton pesanButton = new JFXButton("Pesan");
+        pesanButton.setDefaultButton(true);
+        pesanButton.setOnAction(event -> {
+            List<Item> items = items("belum dipesan");
+            items.forEach(Item::pesan);
+
+            boolean success = true;
+            for (Item item : items) {
+                success &= item.put().getStatus() == StatusResponse.SUCCESS;
             }
-        }
+
+            JFXDialogLayout layoutInformation = new JFXDialogLayout();
+            JFXButton okButton = new JFXButton("Ok");
+            okButton.setCancelButton(true);
+            okButton.setOnAction(evt -> alert.hideWithAnimation());
+            layoutInformation.setActions(okButton);
+            layoutInformation.setHeading(new Label("Berhasil"));
+            layoutInformation.setBody(new Label("Pesanan anda berhasil! mohon tunggu pesanan disajikan"));
+
+            if (success && !items.isEmpty()) {
+                alert.setContent(layoutInformation);
+                alert.show();
+            }
+        });
+
+        JFXButton bayarButton = new JFXButton("Bayar");
+
+        JFXButton keluarButton = new JFXButton("Keluar");
+        keluarButton.setCancelButton(true);
+        keluarButton.setOnAction(event -> alert.hideWithAnimation());
+
+        layout.setActions(pesanButton, bayarButton, keluarButton);
+
+        alert.setContent(layout);
+        alert.show();
     }
 
     public void pengaturanHandle(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() == 4) {
             System.out.println("masuk");
+        }
+    }
+
+    private void setRamenPane(List<DaftarMenu> menuList) {
+        ramenPane.setPrefWidth(800);
+        ramenPane.setPrefHeight(500);
+
+        for (int i = 0; i < menuList.size(); i++) {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ramen.fxml"));
+                Parent root = fxmlLoader.load();
+
+                RamenController c = fxmlLoader.getController();
+                c.rootPane.getStyleClass().add("body-ramen-pane" + i);
+                c.setMenu(menuList.get(i));
+
+                ramenPane.getChildren().add(root);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void setAllMenuPane(List<DaftarMenu> menuList, VBox allMenuPane, String style) {
+        allMenuPane.setPrefWidth(800);
+        allMenuPane.setPrefHeight(500);
+        allMenuPane.setPadding(new Insets(50, 60, 0, 129));
+        allMenuPane.setSpacing(15);
+        allMenuPane.getStyleClass().add(style);
+
+        for (DaftarMenu daftarMenu : menuList) {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/allmenu.fxml"));
+                Parent root = fxmlLoader.load();
+
+                AllMenuController c = fxmlLoader.getController();
+                c.setMenu(daftarMenu);
+
+                allMenuPane.getChildren().add(root);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

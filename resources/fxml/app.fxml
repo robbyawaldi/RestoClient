@@ -11,35 +11,47 @@
 <?import javafx.scene.text.Font?>
 
 <VBox prefHeight="500.0" prefWidth="800.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unindra.restoclient.controllers.AppController">
-    <HBox alignment="BOTTOM_LEFT" prefHeight="69.0" prefWidth="800.0" spacing="10.0">
+    <HBox alignment="BOTTOM_LEFT" prefHeight="69.0" prefWidth="800.0" spacing="10.0" style="-fx-background-color: white;">
         <ImageView fitHeight="50.0" fitWidth="50.0" onMousePressed="#pengaturanHandle" pickOnBounds="true" preserveRatio="true">
             <HBox.margin>
                 <Insets right="10.0" />
             </HBox.margin>
             <Image url="@../icons/logo-ramen-bulet-merah-copy50x50.png" />
         </ImageView>
-        <JFXButton fx:id="ramenButton" ellipsisString="R" focusTraversable="false" mnemonicParsing="false" onAction="#menuHandle" ripplerFill="WHITE" styleClass="button-header-pressed" text="Ramen">
+        <JFXButton fx:id="ramenButton" focusTraversable="false" mnemonicParsing="false" onAction="#menuHandle" ripplerFill="WHITE" styleClass="ramen-pressed" text="Ramen" textOverrun="CLIP" HBox.hgrow="ALWAYS">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+         </graphic>
         </JFXButton>
-        <JFXButton fx:id="minumanButton" ellipsisString="M" focusTraversable="false" layoutX="75.0" layoutY="45.0" mnemonicParsing="false" onAction="#menuHandle" ripplerFill="WHITE" styleClass="button-header" text="Minuman">
+        <JFXButton fx:id="minumanButton" focusTraversable="false" layoutX="75.0" layoutY="45.0" mnemonicParsing="false" onAction="#menuHandle" ripplerFill="WHITE" styleClass="minuman" text="Minuman" textOverrun="CLIP" HBox.hgrow="ALWAYS">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+         </graphic>
         </JFXButton>
-        <JFXButton fx:id="cemilanButton" ellipsisString="C" focusTraversable="false" mnemonicParsing="false" onAction="#menuHandle" ripplerFill="WHITE" styleClass="button-header" text="Cemilan">
+        <JFXButton fx:id="cemilanButton" focusTraversable="false" mnemonicParsing="false" onAction="#menuHandle" ripplerFill="WHITE" styleClass="cemilan" text="Cemilan" textOverrun="CLIP" HBox.hgrow="ALWAYS">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+         </graphic>
         </JFXButton>
-        <JFXButton fx:id="lainnyaButton" ellipsisString="L" focusTraversable="false" mnemonicParsing="false" onAction="#menuHandle" ripplerFill="WHITE" styleClass="button-header" text="Lainnya">
+        <JFXButton fx:id="lainnyaButton" focusTraversable="false" mnemonicParsing="false" onAction="#menuHandle" ripplerFill="WHITE" styleClass="lainnya" text="Lainnya" textOverrun="CLIP" HBox.hgrow="ALWAYS">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+         </graphic>
         </JFXButton>
-        <Pane prefHeight="50.0" prefWidth="224.0" HBox.hgrow="ALWAYS" />
-        <JFXButton fx:id="pesananButton" alignment="TOP_CENTER" ellipsisString="P" focusTraversable="false" mnemonicParsing="false" onAction="#pesananHandle" prefHeight="28.0" prefWidth="106.0" styleClass="pesanan-button" text="Pesanan" textAlignment="CENTER">
+        <Pane HBox.hgrow="SOMETIMES" />
+        <JFXButton fx:id="pesananButton" alignment="TOP_CENTER" ellipsisString="" focusTraversable="false" mnemonicParsing="false" onAction="#pesananHandle" prefHeight="28.0" prefWidth="106.0" styleClass="pesanan-button" text="Pesanan" textAlignment="CENTER" textOverrun="CLIP">
             <graphic>
                 <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
             </graphic>

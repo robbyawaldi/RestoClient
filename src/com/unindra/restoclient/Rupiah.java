@@ -16,7 +16,7 @@ public class Rupiah {
         decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
     }
 
-    public static String format(int number) {
+    public static String rupiah(int number) {
         return decimalFormat.format(number);
     }
 }

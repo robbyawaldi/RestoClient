@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane alignment="CENTER" hgap="10.0" prefHeight="80.0" prefWidth="800.0" styleClass="all-menu" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unindra.restoclient.controllers.AllMenuController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="NEVER" maxWidth="173.0" minWidth="10.0" prefWidth="156.0" />
+      <ColumnConstraints hgrow="NEVER" maxWidth="298.0" minWidth="10.0" prefWidth="129.0" />
+      <ColumnConstraints hgrow="NEVER" maxWidth="298.0" minWidth="10.0" prefWidth="116.0" />
+      <ColumnConstraints hgrow="NEVER" maxWidth="177.0" minWidth="10.0" prefWidth="177.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+       <Label fx:id="namaLabel" prefHeight="17.0" prefWidth="163.0" text="Nama Menu">
+         <styleClass>
+            <String fx:value="text-body" />
+            <String fx:value="text-white" />
+            <String fx:value="text-bold" />
+         </styleClass>
+      </Label>
+       <Label fx:id="hargaLabel" prefHeight="17.0" prefWidth="128.0" text="Harga" GridPane.columnIndex="1">
+         <styleClass>
+            <String fx:value="text-body" />
+            <String fx:value="text-white" />
+            <String fx:value="text-bold" />
+         </styleClass>
+      </Label>
+       <JFXButton fx:id="tambahButton" focusTraversable="false" mnemonicParsing="false" prefHeight="25.0" prefWidth="160.0" styleClass="tambah-pesanan-button" text="Tambah Pesanan" GridPane.columnIndex="3">
+           <graphic>
+               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+           </graphic>
+           <padding>
+               <Insets bottom="-5.0" />
+           </padding>
+       </JFXButton>
+      <JFXTextField focusColor="WHITE" focusTraversable="false" labelFloat="true" prefHeight="30.0" prefWidth="100.0" promptText="Jumlah" style="-fx-font-size: 12pt;" unFocusColor="WHITE" GridPane.columnIndex="2" />
+   </children>
+   <padding>
+      <Insets left="10.0" />
+   </padding>
+</GridPane>

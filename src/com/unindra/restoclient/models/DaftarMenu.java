@@ -1,14 +1,18 @@
 package com.unindra.restoclient.models;
 
+import com.google.gson.Gson;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import javafx.scene.image.Image;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.unindra.restoclient.Client.get;
+import static com.unindra.restoclient.Rupiah.rupiah;
 
 public class DaftarMenu {
     private int id_menu;
@@ -17,7 +21,7 @@ public class DaftarMenu {
     private String type;
     private String deskripsi;
 
-    private DaftarMenu(int id_menu, String nama_menu, int harga_menu, String type, String deskripsi) {
+    public DaftarMenu(int id_menu, String nama_menu, int harga_menu, String type, String deskripsi) {
         this.id_menu = id_menu;
         this.nama_menu = nama_menu;
         this.harga_menu = harga_menu;
@@ -25,27 +29,28 @@ public class DaftarMenu {
         this.deskripsi = deskripsi;
     }
 
-    public static List<DaftarMenu> menuList() {
-        DaftarMenu[] menus = new DaftarMenu[]{
-                new DaftarMenu(1, "miso", 14000, "ramen","Enak dan khas jepang deh"),
-                new DaftarMenu(2, "nemo", 15000, "ramen", "Enak dan khas jepang deh"),
-                new DaftarMenu(3, "shoyu", 12000,"ramen","Enak dan khas jepang deh")
-        };
-        return Arrays.asList(menus);
+    public static List<DaftarMenu> menus() {
+        DaftarMenu[] daftarMenus = new Gson().fromJson(get("/menus").getData(), DaftarMenu[].class);
+        return FXCollections.observableArrayList(daftarMenus);
     }
 
-    public static List<DaftarMenu> menuList(String type) {
-        return menuList().stream()
+    public static List<DaftarMenu> menus(String type) {
+        return menus()
+                .stream()
                 .filter(menu -> menu.type.equals(type))
                 .collect(Collectors.toList());
     }
 
     public static DaftarMenu menu(Item item) {
-        return menuList()
+        return menus()
                 .stream()
                 .filter(menu -> menu.id_menu == item.getId_menu())
                 .findFirst()
                 .orElse(null);
+    }
+
+    public int getId_menu() {
+        return id_menu;
     }
 
     public String getNama_menu() {
@@ -68,8 +73,8 @@ public class DaftarMenu {
         return new SimpleStringProperty(nama_menu);
     }
 
-    public ObjectProperty<Integer> hargaProperty() {
-        return new SimpleObjectProperty<>(harga_menu);
+    public StringProperty hargaProperty() {
+        return new SimpleStringProperty(rupiah(harga_menu));
     }
 
     @Override
@@ -81,5 +86,4 @@ public class DaftarMenu {
                 ", deskripsi='" + deskripsi + '\'' +
                 '}';
     }
-
 }
