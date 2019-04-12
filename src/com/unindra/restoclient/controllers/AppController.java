@@ -1,11 +1,9 @@
 package com.unindra.restoclient.controllers;
 
-import com.jfoenix.controls.JFXAlert;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialogLayout;
-import com.unindra.restoclient.models.DaftarMenu;
-import com.unindra.restoclient.models.Item;
-import com.unindra.restoclient.models.StatusResponse;
+import com.unindra.restoclient.Dialog;
+import com.unindra.restoclient.models.*;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,7 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,34 +20,49 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static com.unindra.restoclient.models.Item.items;
+import static com.unindra.restoclient.Client.get;
+import static com.unindra.restoclient.Dialog.getDialogLayout;
+import static com.unindra.restoclient.models.Item.getItems;
+import static com.unindra.restoclient.models.Setting.setting;
 
 public class AppController implements Initializable {
     public JFXButton ramenButton;
     public JFXButton minumanButton;
     public JFXButton cemilanButton;
     public JFXButton lainnyaButton;
-    public ScrollPane mainPane;
     public JFXButton pesananButton;
+    public ScrollPane mainPane;
 
     private VBox ramenPane;
     private VBox minumanPane;
     private VBox cemilanPane;
     private VBox lainnyaPane;
 
+    private Dialog daftarPesanan;
+    private Dialog alert;
+    private Dialog settingDialog;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // Daftar Menu
         ramenPane = new VBox();
         minumanPane = new VBox();
         cemilanPane = new VBox();
         lainnyaPane = new VBox();
 
-        setRamenPane(DaftarMenu.menus("ramen"));
-        setAllMenuPane(DaftarMenu.menus("minuman"), minumanPane, "body-minuman-pane");
-        setAllMenuPane(DaftarMenu.menus("cemilan"), cemilanPane, "body-cemilan-pane");
-        setAllMenuPane(DaftarMenu.menus("lainnya"), lainnyaPane, "body-lainnya-pane");
+        try {
+            setRamenPane(DaftarMenu.menus("ramen"));
+            setAllMenuPane(DaftarMenu.menus("minuman"), minumanPane, "body-minuman-pane");
+            setAllMenuPane(DaftarMenu.menus("cemilan"), cemilanPane, "body-cemilan-pane");
+            setAllMenuPane(DaftarMenu.menus("lainnya"), lainnyaPane, "body-lainnya-pane");
+            mainPane.setContent(ramenPane);
+        } catch (IOException e) {
+            System.out.println("tidak terkoneksi");
+        }
 
-        mainPane.setContent(ramenPane);
+
+        // Daftar Pesanan & Setting
+        Platform.runLater(this::run);
     }
 
     public void menuHandle(ActionEvent actionEvent) {
@@ -74,59 +86,42 @@ public class AppController implements Initializable {
         }
     }
 
-    public void pesananHandle() throws IOException {
-        Stage primaryStage = (Stage) pesananButton.getScene().getWindow();
-
-        JFXAlert<String> alert = new JFXAlert<>(primaryStage);
-        alert.initModality(Modality.APPLICATION_MODAL);
-        alert.setOverlayClose(false);
-
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/pesanan.fxml"));
-
-        JFXDialogLayout layout = new JFXDialogLayout();
-        layout.setHeading(new Label("Pesanan"));
-        layout.setBody(root);
-
-        JFXButton pesanButton = new JFXButton("Pesan");
-        pesanButton.setDefaultButton(true);
-        pesanButton.setOnAction(event -> {
-            List<Item> items = items("belum dipesan");
-            items.forEach(Item::pesan);
-
-            boolean success = true;
-            for (Item item : items) {
-                success &= item.put().getStatus() == StatusResponse.SUCCESS;
-            }
-
-            JFXDialogLayout layoutInformation = new JFXDialogLayout();
-            JFXButton okButton = new JFXButton("Ok");
-            okButton.setCancelButton(true);
-            okButton.setOnAction(evt -> alert.hideWithAnimation());
-            layoutInformation.setActions(okButton);
-            layoutInformation.setHeading(new Label("Berhasil"));
-            layoutInformation.setBody(new Label("Pesanan anda berhasil! mohon tunggu pesanan disajikan"));
-
-            if (success && !items.isEmpty()) {
-                alert.setContent(layoutInformation);
-                alert.show();
-            }
-        });
-
-        JFXButton bayarButton = new JFXButton("Bayar");
-
-        JFXButton keluarButton = new JFXButton("Keluar");
-        keluarButton.setCancelButton(true);
-        keluarButton.setOnAction(event -> alert.hideWithAnimation());
-
-        layout.setActions(pesanButton, bayarButton, keluarButton);
-
-        alert.setContent(layout);
-        alert.show();
+    public void daftarPesananHandle() {
+        try {
+            Item.updateItems();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        daftarPesanan.getAlert().show();
     }
 
-    public void pengaturanHandle(MouseEvent mouseEvent) {
-        if (mouseEvent.getClickCount() == 4) {
-            System.out.println("masuk");
+    public void settingHandle(MouseEvent mouseEvent) {
+        if (mouseEvent.getClickCount() == 3) {
+            settingDialog.getAlert().show();
+        }
+    }
+
+    private void pesan(List<Item> items) {
+        items.forEach(Item::pesan);
+
+        boolean success = true;
+        for (Item item : items) success &= item.put().getStatus() == StatusResponse.SUCCESS;
+
+        if (success && !items.isEmpty()) {
+            alert.information(
+                    "Berhasil",
+                    "Pesanan anda berhasil! mohon tunggu pesanan disajikan");
+            daftarPesanan.getAlert().hide();
+        }
+    }
+
+    private void bayar() throws IOException {
+        StandardResponse standardResponse = get("/bayar/"+setting().getNo_meja());
+        if (standardResponse.getStatus() == StatusResponse.SUCCESS) {
+            alert.information(
+                    "Mohon tunggu",
+                    "Kasir akan mengantarkan bill ke meja anda");
+            daftarPesanan.getAlert().hide();
         }
     }
 
@@ -140,7 +135,7 @@ public class AppController implements Initializable {
                 Parent root = fxmlLoader.load();
 
                 RamenController c = fxmlLoader.getController();
-                c.rootPane.getStyleClass().add("body-ramen-pane" + i);
+                c.rootPane.getStyleClass().add("body-ramen-pane" + i % 4);
                 c.setMenu(menuList.get(i));
 
                 ramenPane.getChildren().add(root);
@@ -170,5 +165,69 @@ public class AppController implements Initializable {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void run() {
+        Stage stage = (Stage) mainPane.getScene().getWindow();
+
+        alert = new Dialog(stage);
+        daftarPesanan = new Dialog(stage);
+        settingDialog = new Dialog(stage);
+
+        JFXButton pesanButton = new JFXButton("Pesan");
+        JFXButton bayarButton = new JFXButton("Bayar");
+        JFXButton keluarButton = new JFXButton("Keluar");
+        JFXButton simpan = new JFXButton("Simpan");
+
+        try {
+            daftarPesanan.getAlert().setContent(getDialogLayout(
+                    new Label("Daftar Pesanan"),
+                    FXMLLoader.load(getClass().getResource("/fxml/pesanan.fxml")),
+                    pesanButton,
+                    bayarButton,
+                    keluarButton));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/fxml/setting.fxml"));
+
+        try {
+            settingDialog.getAlert().setContent(getDialogLayout(
+                    new Label("Setting"),
+                    fxmlLoader.load(),
+                    simpan));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        pesanButton.setOnAction(event -> {
+            List<Item> items = getItems("belum dipesan");
+            if (!items.isEmpty())
+                alert.confirmation(
+                        "Anda yakin pesanan benar? pesanan tidak dapat dibatalkan setelah proses pemesanan berhasil",
+                        e -> pesan(items));
+        });
+        bayarButton.setOnAction(event -> {
+            try {
+                bayar();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        keluarButton.setOnAction(event -> daftarPesanan.getAlert().hide());
+
+        SettingController settingController = fxmlLoader.getController();
+        simpan.setOnAction(event -> {
+            Setting setting = setting();
+            setting.setNo_meja(settingController.mejaField.getText());
+            setting.setHost(settingController.hostField.getText());
+            setting.setPort(settingController.portField.getText());
+            setting.simpan();
+            stage.close();
+            stage.show();
+        });
+        simpan.requestFocus();
     }
 }

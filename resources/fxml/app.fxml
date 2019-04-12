@@ -12,7 +12,7 @@
 
 <VBox prefHeight="500.0" prefWidth="800.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unindra.restoclient.controllers.AppController">
     <HBox alignment="BOTTOM_LEFT" prefHeight="69.0" prefWidth="800.0" spacing="10.0" style="-fx-background-color: white;">
-        <ImageView fitHeight="50.0" fitWidth="50.0" onMousePressed="#pengaturanHandle" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="50.0" fitWidth="50.0" onMousePressed="#settingHandle" pickOnBounds="true" preserveRatio="true">
             <HBox.margin>
                 <Insets right="10.0" />
             </HBox.margin>
@@ -51,7 +51,7 @@
          </graphic>
         </JFXButton>
         <Pane HBox.hgrow="SOMETIMES" />
-        <JFXButton fx:id="pesananButton" alignment="TOP_CENTER" ellipsisString="" focusTraversable="false" mnemonicParsing="false" onAction="#pesananHandle" prefHeight="28.0" prefWidth="106.0" styleClass="pesanan-button" text="Pesanan" textAlignment="CENTER" textOverrun="CLIP">
+        <JFXButton fx:id="pesananButton" alignment="TOP_CENTER" ellipsisString="" focusTraversable="false" mnemonicParsing="false" onAction="#daftarPesananHandle" prefHeight="28.0" prefWidth="128.0" styleClass="pesanan-button" text="Daftar Pesanan" textAlignment="CENTER" textOverrun="CLIP">
             <graphic>
                 <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
             </graphic>

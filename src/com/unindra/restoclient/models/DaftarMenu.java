@@ -1,17 +1,16 @@
 package com.unindra.restoclient.models;
 
-import com.google.gson.Gson;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.scene.image.Image;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.unindra.restoclient.Client.get;
+import static com.unindra.restoclient.Client.gson;
 import static com.unindra.restoclient.Rupiah.rupiah;
 
 public class DaftarMenu {
@@ -29,12 +28,12 @@ public class DaftarMenu {
         this.deskripsi = deskripsi;
     }
 
-    public static List<DaftarMenu> menus() {
-        DaftarMenu[] daftarMenus = new Gson().fromJson(get("/menus").getData(), DaftarMenu[].class);
+    private static List<DaftarMenu> menus() throws IOException {
+        DaftarMenu[] daftarMenus = gson().fromJson(get("/menus").getData(), DaftarMenu[].class);
         return FXCollections.observableArrayList(daftarMenus);
     }
 
-    public static List<DaftarMenu> menus(String type) {
+    public static List<DaftarMenu> menus(String type) throws IOException {
         return menus()
                 .stream()
                 .filter(menu -> menu.type.equals(type))
@@ -42,14 +41,18 @@ public class DaftarMenu {
     }
 
     public static DaftarMenu menu(Item item) {
-        return menus()
-                .stream()
-                .filter(menu -> menu.id_menu == item.getId_menu())
-                .findFirst()
-                .orElse(null);
+        try {
+            return menus()
+                    .stream()
+                    .filter(menu -> menu.id_menu == item.getId_menu())
+                    .findFirst()
+                    .orElse(null);
+        } catch (IOException e) {
+            return null;
+        }
     }
 
-    public int getId_menu() {
+    int getId_menu() {
         return id_menu;
     }
 
@@ -59,6 +62,10 @@ public class DaftarMenu {
 
     public int getHarga_menu() {
         return harga_menu;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public String getDeskripsi() {

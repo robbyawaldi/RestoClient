@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="160.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.172-ea"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unindra.restoclient.controllers.SettingController">
+    <Label text="No Meja"/>
+    <JFXTextField fx:id="mejaField"/>
+    <Label text="Host">
+        <padding>
+            <Insets top="10.0"/>
+        </padding>
+    </Label>
+    <JFXTextField fx:id="hostField"/>
+    <Label text="Port">
+        <padding>
+            <Insets top="10.0"/>
+        </padding>
+    </Label>
+    <JFXTextField fx:id="portField"/>
+</VBox>

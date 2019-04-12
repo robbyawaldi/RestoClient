@@ -9,7 +9,10 @@ public enum StatusResponse {
         this.status = status;
     }
 
-    public String getStatus() {
-        return status;
+    @Override
+    public String toString() {
+        return "StatusResponse{" +
+                "status='" + status + '\'' +
+                '}';
     }
 }

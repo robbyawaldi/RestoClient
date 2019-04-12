@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unindra.restoclient.controllers.PesananController">
-    <JFXTreeTableView fx:id="pesananTableView" maxWidth="-Infinity" prefHeight="300.0" showRoot="false" stylesheets="@../css/scroll.css" VBox.vgrow="ALWAYS" />
+    <JFXTreeTableView fx:id="pesananTableView" focusTraversable="false" maxWidth="-Infinity" prefHeight="300.0" showRoot="false" stylesheets="@../css/scroll.css" VBox.vgrow="ALWAYS" />
     <GridPane hgap="20.0" prefHeight="30.0" prefWidth="230.0">
         <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" maxWidth="393.0" minWidth="10.0" prefWidth="117.0" />
@@ -19,7 +19,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
         <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="319.0" styleClass="text-body" text="Total harga:" />
-        <Label fx:id="totalLabel" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="176.0" text="Rp.50.000" GridPane.columnIndex="1">
+        <Label fx:id="totalLabel" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="176.0" text="Rp0,00" GridPane.columnIndex="1">
             <styleClass>
                 <String fx:value="text-body" />
                 <String fx:value="text-bold" />

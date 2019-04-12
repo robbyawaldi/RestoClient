@@ -14,33 +14,30 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
-public class Client {
-    private static String baseUrl = "http://localhost:4567";
+import static com.unindra.restoclient.models.Setting.setting;
 
-    public static StandardResponse get(String paramUrl) {
-        try {
-            URL url = new URL(baseUrl+paramUrl);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String inputLine;
-                StringBuilder stringBuilder = new StringBuilder();
-                while ((inputLine = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(inputLine);
-                }
-                bufferedReader.close();
-                return gson().fromJson(stringBuilder.toString(), StandardResponse.class);
-            } else return new StandardResponse(StatusResponse.ERROR);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new StandardResponse(StatusResponse.ERROR);
-        }
+public class Client {
+
+    public static StandardResponse get(String paramUrl) throws IOException {
+        URL url = new URL(setting().getBaseUrl() + paramUrl);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String inputLine;
+            StringBuilder stringBuilder = new StringBuilder();
+            while ((inputLine = bufferedReader.readLine()) != null) {
+                stringBuilder.append(inputLine);
+            }
+            bufferedReader.close();
+            connection.disconnect();
+            return gson().fromJson(stringBuilder.toString(), StandardResponse.class);
+        } else return new StandardResponse(StatusResponse.ERROR);
     }
 
     public static StandardResponse send(String paramUrl, String requestMethod, String json) {
         try {
-            URL url = new URL(baseUrl+paramUrl);
+            URL url = new URL(setting().getBaseUrl() + paramUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setConnectTimeout(5000);
             connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
@@ -48,6 +45,7 @@ public class Client {
             connection.setDoInput(true);
             connection.setDoOutput(true);
             OutputStream outputStream = connection.getOutputStream();
+            connection.disconnect();
             outputStream.write(json.getBytes(StandardCharsets.UTF_8));
             outputStream.close();
             InputStream inputStream = new BufferedInputStream(connection.getInputStream());
