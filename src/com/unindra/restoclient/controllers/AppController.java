@@ -44,6 +44,9 @@ public class AppController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // Daftar Pesanan & Setting
+        Platform.runLater(this::run);
+
         // Daftar Menu
         ramenPane = new VBox();
         minumanPane = new VBox();
@@ -57,12 +60,15 @@ public class AppController implements Initializable {
             setAllMenuPane(DaftarMenu.menus("lainnya"), lainnyaPane, "body-lainnya-pane");
             mainPane.setContent(ramenPane);
         } catch (IOException e) {
-            System.out.println("tidak terkoneksi");
+            ramenButton.setDisable(true);
+            minumanButton.setDisable(true);
+            cemilanButton.setDisable(true);
+            lainnyaButton.setDisable(true);
+            pesananButton.setDisable(true);
+            Platform.runLater(() -> alert.information(
+                    "Koneksi Terputus",
+                    "Buka setting untuk mengubah alamat host atau port"));
         }
-
-
-        // Daftar Pesanan & Setting
-        Platform.runLater(this::run);
     }
 
     public void menuHandle(ActionEvent actionEvent) {
@@ -116,7 +122,7 @@ public class AppController implements Initializable {
     }
 
     private void bayar() throws IOException {
-        StandardResponse standardResponse = get("/bayar/"+setting().getNo_meja());
+        StandardResponse standardResponse = get("/bayar/" + setting().getNo_meja());
         if (standardResponse.getStatus() == StatusResponse.SUCCESS) {
             alert.information(
                     "Mohon tunggu",
@@ -176,8 +182,9 @@ public class AppController implements Initializable {
 
         JFXButton pesanButton = new JFXButton("Pesan");
         JFXButton bayarButton = new JFXButton("Bayar");
-        JFXButton keluarButton = new JFXButton("Keluar");
-        JFXButton simpan = new JFXButton("Simpan");
+        JFXButton keluarPesananButton = new JFXButton("Keluar");
+        JFXButton keluarSettingButton = new JFXButton("Keluar");
+        JFXButton simpanSettingButton = new JFXButton("Simpan");
 
         try {
             daftarPesanan.getAlert().setContent(getDialogLayout(
@@ -185,7 +192,7 @@ public class AppController implements Initializable {
                     FXMLLoader.load(getClass().getResource("/fxml/pesanan.fxml")),
                     pesanButton,
                     bayarButton,
-                    keluarButton));
+                    keluarPesananButton));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -197,7 +204,8 @@ public class AppController implements Initializable {
             settingDialog.getAlert().setContent(getDialogLayout(
                     new Label("Setting"),
                     fxmlLoader.load(),
-                    simpan));
+                    simpanSettingButton,
+                    keluarSettingButton));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -216,18 +224,20 @@ public class AppController implements Initializable {
                 e.printStackTrace();
             }
         });
-        keluarButton.setOnAction(event -> daftarPesanan.getAlert().hide());
+        keluarPesananButton.setOnAction(event -> daftarPesanan.getAlert().hide());
 
         SettingController settingController = fxmlLoader.getController();
-        simpan.setOnAction(event -> {
+        simpanSettingButton.setOnAction(event -> {
             Setting setting = setting();
             setting.setNo_meja(settingController.mejaField.getText());
             setting.setHost(settingController.hostField.getText());
             setting.setPort(settingController.portField.getText());
             setting.simpan();
-            stage.close();
-            stage.show();
+            alert.confirmation(
+                    "Aplikasi akan dimatikan",
+                    e -> System.exit(0));
         });
-        simpan.requestFocus();
+        simpanSettingButton.requestFocus();
+        keluarSettingButton.setOnAction(event -> settingDialog.getAlert().hide());
     }
 }

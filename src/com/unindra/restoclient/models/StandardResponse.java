@@ -37,7 +37,7 @@ public class StandardResponse {
         this.message = message;
     }
 
-    public JsonElement getData() {
+    JsonElement getData() {
         return data;
     }
 

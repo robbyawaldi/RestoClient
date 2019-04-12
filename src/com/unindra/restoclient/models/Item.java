@@ -18,6 +18,7 @@ import static com.unindra.restoclient.Rupiah.rupiah;
 import static com.unindra.restoclient.models.DaftarMenu.menu;
 import static com.unindra.restoclient.models.Level.level;
 import static com.unindra.restoclient.models.Setting.setting;
+import static java.util.Objects.requireNonNull;
 
 public class Item extends RecursiveTreeObject<Item> {
     private int id_item;
@@ -60,7 +61,7 @@ public class Item extends RecursiveTreeObject<Item> {
     }
 
     public static void updateItems() throws IOException {
-        StandardResponse standardResponse = get(paramUrl + "/"+setting().getNo_meja());
+        StandardResponse standardResponse = get(paramUrl + "/" + setting().getNo_meja());
         if (standardResponse.getStatus() == StatusResponse.SUCCESS) {
             Item[] items = gson().fromJson(standardResponse.getData(), Item[].class);
             for (Item item : items) item.setChildren(FXCollections.observableArrayList());
@@ -86,7 +87,7 @@ public class Item extends RecursiveTreeObject<Item> {
 
     private int getTotal() {
         try {
-            return (menu(this).getHarga_menu() + level(lvl_item).getHarga_level()) * jumlah_item;
+            return (requireNonNull(menu(this)).getHarga_menu() + level(lvl_item).getHarga_level()) * jumlah_item;
         } catch (IOException e) {
             return 0;
         }

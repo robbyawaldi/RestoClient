@@ -48,6 +48,7 @@
             <Insets bottom="-5.0"/>
         </padding>
     </JFXButton>
-    <JFXTextField fx:id="jumlahField" focusColor="WHITE" focusTraversable="false" labelFloat="true" prefHeight="30.0" prefWidth="100.0"
+    <JFXTextField fx:id="jumlahField" focusColor="WHITE" focusTraversable="false" labelFloat="true" prefHeight="30.0"
+                  prefWidth="100.0"
                   promptText="Jumlah" style="-fx-font-size: 12pt;" unFocusColor="WHITE" GridPane.columnIndex="2"/>
 </GridPane>

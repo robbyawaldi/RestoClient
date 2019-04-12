@@ -19,12 +19,12 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static com.unindra.restoclient.Rupiah.rupiah;
 import static com.unindra.restoclient.models.DaftarMenu.menu;
 import static com.unindra.restoclient.models.Item.getItems;
+import static java.util.Objects.requireNonNull;
 
 public class PesananController implements Initializable {
 
@@ -39,9 +39,9 @@ public class PesananController implements Initializable {
         TreeTableColumn<Item, String> totalCol = new TreeTableColumn<>("Total");
         TreeTableColumn<Item, String> hapusCol = new TreeTableColumn<>("Hapus");
 
-        namaCol.setCellValueFactory(param -> Objects.requireNonNull(menu(param.getValue().getValue())).namaProperty());
+        namaCol.setCellValueFactory(param -> requireNonNull(menu(param.getValue().getValue())).namaProperty());
         jumlahCol.setCellValueFactory(param -> param.getValue().getValue().jumlahProperty());
-        hargaCol.setCellValueFactory(param -> Objects.requireNonNull(menu(param.getValue().getValue())).hargaProperty());
+        hargaCol.setCellValueFactory(param -> requireNonNull(menu(param.getValue().getValue())).hargaProperty());
         totalCol.setCellValueFactory(param -> param.getValue().getValue().totalProperty());
         hapusCol.setCellValueFactory(param -> new SimpleStringProperty(""));
 
@@ -56,7 +56,7 @@ public class PesananController implements Initializable {
                             setText(null);
                         } else {
                             Item i = getItems().get(getIndex());
-                            if (Objects.requireNonNull(menu(i)).getType().equals("ramen"))
+                            if (requireNonNull(menu(i)).getType().equals("ramen"))
                                 setText(item + " lv." + i.getLvl_item());
                             else setText(item);
                         }

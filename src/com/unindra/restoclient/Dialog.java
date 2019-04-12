@@ -1,5 +1,6 @@
 package com.unindra.restoclient;
 
+import com.jfoenix.animation.alert.JFXAlertAnimation;
 import com.jfoenix.controls.JFXAlert;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialogLayout;
@@ -16,7 +17,9 @@ public class Dialog {
 
     public Dialog(Stage stage) {
         alert = new JFXAlert<>(stage);
+        alert.setOverlayClose(false);
         alert.initModality(Modality.APPLICATION_MODAL);
+        alert.setAnimation(JFXAlertAnimation.TOP_ANIMATION);
     }
 
     public static JFXDialogLayout getDialogLayout(Node heading, Node body, JFXButton... buttons) {

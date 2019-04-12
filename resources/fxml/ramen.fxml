@@ -51,7 +51,8 @@
         </padding>
         <JFXComboBox fx:id="levelCombo" focusColor="WHITE" focusTraversable="false" labelFloat="true" prefHeight="30.0"
                      prefWidth="100.0" promptText="Level" unFocusColor="WHITE"/>
-        <JFXTextField fx:id="jumlahField" focusColor="WHITE" focusTraversable="false" labelFloat="true" prefHeight="30.0" prefWidth="100.0"
+        <JFXTextField fx:id="jumlahField" focusColor="WHITE" focusTraversable="false" labelFloat="true"
+                      prefHeight="30.0" prefWidth="100.0"
                       promptText="Jumlah" unFocusColor="WHITE"/>
         <JFXButton fx:id="tambahButton" contentDisplay="TOP" focusTraversable="false" mnemonicParsing="false"
                    prefHeight="70.0" prefWidth="123.0" styleClass="tambah-pesanan-button" text="Tambah Pesanan">
