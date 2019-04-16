@@ -1,0 +1,175 @@
+/*******************************************************************************
+ *                                                                             *
+ * Font			                                                               *
+ *                                                                             *
+ ******************************************************************************/
+
+@font-face {
+    font-family: OpenSans;
+    src: url('/fonts/OpenSans-Bold.ttf');
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Button  			                                                           *
+ *                                                                             *
+ ******************************************************************************/
+
+.pesanan-button {
+    -fx-graphic: url('/icons/icons8-shopping-cart-20.png');
+}
+
+.tambah-pesanan-button {
+    -fx-graphic: url('/icons/icons8-add-shopping-cart-30.png');
+    -fx-font-family: 'OpenSans';
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.ramen {
+    -fx-graphic: url('/icons/icons8-noodles-20.png');
+}
+
+.minuman {
+     -fx-graphic: url('/icons/icons8-soda-20.png');
+}
+
+.cemilan {
+    -fx-graphic: url('/icons/icons8-french-fries-20.png');
+}
+
+.lainnya {
+    -fx-graphic: url('/icons/icons8-rice-bowl-20.png');
+}
+
+.ramen:hover, .minuman:hover, .cemilan:hover, .lainnya:hover, .pesanan-button:hover {
+    -fx-background-color: #EAEAEA;
+}
+
+.ramen-pressed {
+    -fx-graphic: url('/icons/icons8-noodles-20-white.png');
+    -fx-background-color: #FCB623;
+    -fx-text-fill: white;
+}
+
+.minuman-pressed {
+    -fx-graphic: url('/icons/icons8-soda-20-white.png');
+    -fx-background-color: #373F51;
+    -fx-text-fill: white;
+}
+
+.cemilan-pressed {
+    -fx-graphic: url('/icons/icons8-french-fries-20-white.png');
+    -fx-background-color: #3423A6;
+    -fx-text-fill: white;
+}
+
+.lainnya-pressed {
+    -fx-graphic: url('/icons/icons8-rice-bowl-20-white.png');
+    -fx-background-color: #2E5EAA;
+    -fx-text-fill: white;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Text 			                                                           *
+ *                                                                             *
+ ******************************************************************************/
+
+.text-body {
+    -fx-font-family: 'OpenSans';
+    -fx-font-size: 12pt;
+}
+
+.nama-ramen {
+    -fx-font-size: 20pt;
+}
+
+.harga-ramen {
+    -fx-font-size: 18pt;
+}
+
+.text-white {
+    -fx-text-fill: white;
+}
+
+.text-bold {
+    -fx-font-weight: bold;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Component   		                                                           *
+ *                                                                             *
+ ******************************************************************************/
+
+.jfx-combo-box {
+    -fx-font-family: 'OpenSans';
+    -fx-font-size: 14pt;
+    -fx-prompt-text-fill: white;
+    -fx-text-fill: white;
+}
+
+.combo-box > .list-cell {
+    -fx-text-fill: white;
+}
+
+.combo-box .arrow {
+    -fx-background-color: white;
+}
+
+.jfx-text-field {
+    -fx-font-family: 'OpenSans';
+    -fx-font-size: 14pt;
+    -fx-prompt-text-fill: white;
+    -fx-text-fill: white;
+}
+
+.ramen-image-view {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 10, 0, 0, 5);
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Pane 			                                                           *
+ *                                                                             *
+ ******************************************************************************/
+
+.body-white {
+    -fx-background-color: white;
+}
+
+.body-ramen-pane0 {
+    -fx-background-color: #FCB623;
+}
+
+.body-ramen-pane1 {
+    -fx-background-color: #F9564F;
+}
+
+.body-ramen-pane2 {
+    -fx-background-color: #B33F62;
+}
+
+.body-ramen-pane3 {
+    -fx-background-color: #0C0A3E;
+}
+
+.body-minuman-pane {
+    -fx-background-color: #373F51;
+}
+
+.body-cemilan-pane {
+    -fx-background-color: #3423A6;
+}
+
+.body-lainnya-pane {
+    -fx-background-color: #2E5EAA;
+}
+
+.all-menu {
+    -fx-border-width: 2;
+    -fx-border-color: white;
+    -fx-border-radius: 10pt;
+}
+
