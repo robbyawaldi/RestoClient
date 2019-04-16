@@ -13,34 +13,34 @@ import static com.unindra.restoclient.Client.get;
 import static com.unindra.restoclient.Client.gson;
 import static com.unindra.restoclient.Rupiah.rupiah;
 
-public class DaftarMenu {
+public class Menu {
     private int id_menu;
     private String nama_menu;
     private int harga_menu;
-    private String type;
+    private String tipe_menu;
     private String deskripsi;
 
-    public DaftarMenu(int id_menu, String nama_menu, int harga_menu, String type, String deskripsi) {
+    public Menu(int id_menu, String nama_menu, int harga_menu, String type, String deskripsi) {
         this.id_menu = id_menu;
         this.nama_menu = nama_menu;
         this.harga_menu = harga_menu;
-        this.type = type;
+        this.tipe_menu = type;
         this.deskripsi = deskripsi;
     }
 
-    private static List<DaftarMenu> menus() throws IOException {
-        DaftarMenu[] daftarMenus = gson().fromJson(get("/menus").getData(), DaftarMenu[].class);
+    private static List<Menu> menus() throws IOException {
+        Menu[] daftarMenus = gson().fromJson(get("/menus").getData(), Menu[].class);
         return FXCollections.observableArrayList(daftarMenus);
     }
 
-    public static List<DaftarMenu> menus(String type) throws IOException {
+    public static List<Menu> menus(String type) throws IOException {
         return menus()
                 .stream()
-                .filter(menu -> menu.type.equals(type))
+                .filter(menu -> menu.tipe_menu.equals(type))
                 .collect(Collectors.toList());
     }
 
-    public static DaftarMenu menu(Item item) {
+    public static Menu menu(Item item) {
         try {
             return menus()
                     .stream()
@@ -64,8 +64,8 @@ public class DaftarMenu {
         return harga_menu;
     }
 
-    public String getType() {
-        return type;
+    public String getTipe_menu() {
+        return tipe_menu;
     }
 
     public String getDeskripsi() {
@@ -86,7 +86,7 @@ public class DaftarMenu {
 
     @Override
     public String toString() {
-        return "DaftarMenu{" +
+        return "Menu{" +
                 "id_menu=" + id_menu +
                 ", nama_menu='" + nama_menu + '\'' +
                 ", harga_menu=" + harga_menu +

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 import static com.unindra.restoclient.Client.*;
 import static com.unindra.restoclient.Rupiah.rupiah;
-import static com.unindra.restoclient.models.DaftarMenu.menu;
+import static com.unindra.restoclient.models.Menu.menu;
 import static com.unindra.restoclient.models.Level.level;
 import static com.unindra.restoclient.models.Setting.setting;
 import static java.util.Objects.requireNonNull;
@@ -41,11 +41,11 @@ public class Item extends RecursiveTreeObject<Item> {
         this.status_item = status_item;
     }
 
-    public Item(DaftarMenu menu, int jumlah_item) {
+    public Item(Menu menu, int jumlah_item) {
         this(menu.getId_menu(), jumlah_item, 0, setting().getNo_meja(), "belum dipesan");
     }
 
-    public Item(DaftarMenu menu, int jumlah_item, int lvl_item) {
+    public Item(Menu menu, int jumlah_item, int lvl_item) {
         this(menu.getId_menu(), jumlah_item, lvl_item, setting().getNo_meja(), "belum dipesan");
     }
 

@@ -54,10 +54,10 @@ public class AppController implements Initializable {
         lainnyaPane = new VBox();
 
         try {
-            setRamenPane(DaftarMenu.menus("ramen"));
-            setAllMenuPane(DaftarMenu.menus("minuman"), minumanPane, "body-minuman-pane");
-            setAllMenuPane(DaftarMenu.menus("cemilan"), cemilanPane, "body-cemilan-pane");
-            setAllMenuPane(DaftarMenu.menus("lainnya"), lainnyaPane, "body-lainnya-pane");
+            setRamenPane(Menu.menus("ramen"));
+            setAllMenuPane(Menu.menus("minuman"), minumanPane, "body-minuman-pane");
+            setAllMenuPane(Menu.menus("cemilan"), cemilanPane, "body-cemilan-pane");
+            setAllMenuPane(Menu.menus("lainnya"), lainnyaPane, "body-lainnya-pane");
             mainPane.setContent(ramenPane);
         } catch (IOException e) {
             ramenButton.setDisable(true);
@@ -77,16 +77,17 @@ public class AppController implements Initializable {
         cemilanButton.getStyleClass().set(2, "cemilan");
         lainnyaButton.getStyleClass().set(2, "lainnya");
 
-        if (actionEvent.getSource() == ramenButton) {
+        Object source = actionEvent.getSource();
+        if (ramenButton.equals(source)) {
             ramenButton.getStyleClass().set(2, "ramen-pressed");
             mainPane.setContent(ramenPane);
-        } else if (actionEvent.getSource() == minumanButton) {
+        } else if (minumanButton.equals(source)) {
             minumanButton.getStyleClass().set(2, "minuman-pressed");
             mainPane.setContent(minumanPane);
-        } else if (actionEvent.getSource() == cemilanButton) {
+        } else if (cemilanButton.equals(source)) {
             cemilanButton.getStyleClass().set(2, "cemilan-pressed");
             mainPane.setContent(cemilanPane);
-        } else if (actionEvent.getSource() == lainnyaButton) {
+        } else if (lainnyaButton.equals(source)) {
             lainnyaButton.getStyleClass().set(2, "lainnya-pressed");
             mainPane.setContent(lainnyaPane);
         }
@@ -131,7 +132,7 @@ public class AppController implements Initializable {
         }
     }
 
-    private void setRamenPane(List<DaftarMenu> menuList) {
+    private void setRamenPane(List<Menu> menuList) {
         ramenPane.setPrefWidth(800);
         ramenPane.setPrefHeight(500);
 
@@ -151,14 +152,14 @@ public class AppController implements Initializable {
         }
     }
 
-    private void setAllMenuPane(List<DaftarMenu> menuList, VBox allMenuPane, String style) {
+    private void setAllMenuPane(List<Menu> menuList, VBox allMenuPane, String style) {
         allMenuPane.setPrefWidth(800);
         allMenuPane.setPrefHeight(500);
         allMenuPane.setPadding(new Insets(50, 60, 0, 129));
         allMenuPane.setSpacing(15);
         allMenuPane.getStyleClass().add(style);
 
-        for (DaftarMenu daftarMenu : menuList) {
+        for (Menu daftarMenu : menuList) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/allmenu.fxml"));
                 Parent root = fxmlLoader.load();

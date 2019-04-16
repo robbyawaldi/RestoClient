@@ -135,6 +135,10 @@
  *                                                                             *
  ******************************************************************************/
 
+.body-white {
+    -fx-background-color: white;
+}
+
 .body-ramen-pane0 {
     -fx-background-color: #FCB623;
 }

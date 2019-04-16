@@ -5,7 +5,7 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import com.unindra.restoclient.Dialog;
 import com.unindra.restoclient.Rupiah;
-import com.unindra.restoclient.models.DaftarMenu;
+import com.unindra.restoclient.models.Menu;
 import com.unindra.restoclient.models.Item;
 import com.unindra.restoclient.models.StandardResponse;
 import com.unindra.restoclient.models.StatusResponse;
@@ -26,7 +26,7 @@ public class RamenController {
     public JFXButton tambahButton;
     public JFXTextField jumlahField;
 
-    void setMenu(DaftarMenu menu) {
+    void setMenu(Menu menu) {
         namaLabel.setText(menu.getNama_menu().toUpperCase());
         keteranganLabel.setText(menu.getDeskripsi());
         hargaLabel.setText(Rupiah.rupiah(menu.getHarga_menu()));

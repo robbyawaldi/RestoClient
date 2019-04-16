@@ -22,7 +22,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import static com.unindra.restoclient.Rupiah.rupiah;
-import static com.unindra.restoclient.models.DaftarMenu.menu;
+import static com.unindra.restoclient.models.Menu.menu;
 import static com.unindra.restoclient.models.Item.getItems;
 import static java.util.Objects.requireNonNull;
 
@@ -56,7 +56,7 @@ public class PesananController implements Initializable {
                             setText(null);
                         } else {
                             Item i = getItems().get(getIndex());
-                            if (requireNonNull(menu(i)).getType().equals("ramen"))
+                            if (requireNonNull(menu(i)).getTipe_menu().equals("ramen"))
                                 setText(item + " lv." + i.getLvl_item());
                             else setText(item);
                         }
@@ -75,8 +75,8 @@ public class PesananController implements Initializable {
                     protected void updateItem(String item, boolean empty) {
                         super.updateItem(item, empty);
                         if (item == null) {
-                            setGraphic(null);
                             setText(null);
+                            setGraphic(null);
                         } else {
                             button.setStyle("-fx-background-color: #EAEAEA");
                             button.setOnAction(event -> {
@@ -101,6 +101,7 @@ public class PesananController implements Initializable {
                                 setText(i.getStatus_item());
                                 setGraphic(null);
                             } else {
+                                setText(null);
                                 setGraphic(button);
                             }
                         }
