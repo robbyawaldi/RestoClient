@@ -24,7 +24,7 @@ public class Item extends RecursiveTreeObject<Item> {
     private int id_item;
     private int id_menu;
     private int jumlah_item;
-    private int lvl_item;
+    private int level_item;
     private String no_meja;
     private String status_item;
     @Expose
@@ -36,7 +36,7 @@ public class Item extends RecursiveTreeObject<Item> {
         this.id_item = 0;
         this.id_menu = id_menu;
         this.jumlah_item = jumlah_item;
-        this.lvl_item = lvl_item;
+        this.level_item = lvl_item;
         this.no_meja = no_meja;
         this.status_item = status_item;
     }
@@ -87,7 +87,7 @@ public class Item extends RecursiveTreeObject<Item> {
 
     private int getTotal() {
         try {
-            return (requireNonNull(menu(this)).getHarga_menu() + level(lvl_item).getHarga_level()) * jumlah_item;
+            return (requireNonNull(menu(this)).getHarga_menu() + level(level_item).getHarga_level()) * jumlah_item;
         } catch (IOException e) {
             return 0;
         }
@@ -101,8 +101,8 @@ public class Item extends RecursiveTreeObject<Item> {
         return id_menu;
     }
 
-    public int getLvl_item() {
-        return lvl_item;
+    public int getLevel_item() {
+        return level_item;
     }
 
     public String getStatus_item() {
@@ -123,7 +123,7 @@ public class Item extends RecursiveTreeObject<Item> {
                 "id_item=" + id_item +
                 ", id_menu=" + id_menu +
                 ", jumlah_item=" + jumlah_item +
-                ", lvl_item=" + lvl_item +
+                ", level_item=" + level_item +
                 ", no_meja=" + no_meja +
                 ", status_item='" + status_item + '\'' +
                 '}';

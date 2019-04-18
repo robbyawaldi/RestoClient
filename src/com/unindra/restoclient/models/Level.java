@@ -9,12 +9,12 @@ import static com.unindra.restoclient.Client.get;
 import static com.unindra.restoclient.Client.gson;
 
 public class Level {
-    private int level;
+    private int level_item;
     private int harga_level;
     private static final String paramUrl = "/levels";
 
     private Level(int level, int harga_level) {
-        this.level = level;
+        this.level_item = level;
         this.harga_level = harga_level;
     }
 
@@ -28,7 +28,7 @@ public class Level {
     }
 
     static Level level(int level) throws IOException {
-        return levelList().stream().filter(l -> l.level == level).findFirst().orElse(null);
+        return levelList().stream().filter(l -> l.level_item == level).findFirst().orElse(null);
     }
 
     int getHarga_level() {
@@ -38,7 +38,7 @@ public class Level {
     @Override
     public String toString() {
         return "Level{" +
-                "level=" + level +
+                "level_item=" + level_item +
                 ", harga_level=" + harga_level +
                 '}';
     }

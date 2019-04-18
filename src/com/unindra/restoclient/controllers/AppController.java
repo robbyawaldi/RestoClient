@@ -219,10 +219,13 @@ public class AppController implements Initializable {
                         e -> pesan(items));
         });
         bayarButton.setOnAction(event -> {
-            try {
-                bayar();
-            } catch (IOException e) {
-                e.printStackTrace();
+            List<Item> items = getItems("diproses");
+            if (items.size() == getItems().size()) {
+                try {
+                    bayar();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
         keluarPesananButton.setOnAction(event -> daftarPesanan.getAlert().hide());
