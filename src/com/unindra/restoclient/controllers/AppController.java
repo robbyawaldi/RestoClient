@@ -108,30 +108,6 @@ public class AppController implements Initializable {
         }
     }
 
-    private void pesan(List<Item> items) {
-        items.forEach(Item::pesan);
-
-        boolean success = true;
-        for (Item item : items) success &= item.put().getStatus() == StatusResponse.SUCCESS;
-
-        if (success && !items.isEmpty()) {
-            alert.information(
-                    "Berhasil",
-                    "Pesanan anda berhasil! mohon tunggu pesanan disajikan");
-            daftarPesanan.getAlert().hide();
-        }
-    }
-
-    private void bayar() throws IOException {
-        StandardResponse standardResponse = get("/bayar/" + setting().getNo_meja());
-        if (standardResponse.getStatus() == StatusResponse.SUCCESS) {
-            alert.information(
-                    "Mohon tunggu",
-                    "Kasir akan mengantarkan bill ke meja anda");
-            daftarPesanan.getAlert().hide();
-        }
-    }
-
     private void setRamenPane(List<Menu> menuList) {
         ramenPane.setPrefWidth(800);
         ramenPane.setPrefHeight(500);
@@ -171,6 +147,30 @@ public class AppController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void pesan(List<Item> items) {
+        items.forEach(Item::pesan);
+
+        boolean success = true;
+        for (Item item : items) success &= item.put().getStatus() == StatusResponse.SUCCESS;
+
+        if (success && !items.isEmpty()) {
+            alert.information(
+                    "Berhasil",
+                    "Pesanan anda berhasil! mohon tunggu pesanan disajikan");
+            daftarPesanan.getAlert().hide();
+        }
+    }
+
+    private void bayar() throws IOException {
+        StandardResponse standardResponse = get("/bayar/" + setting().getNo_meja());
+        if (standardResponse.getStatus() == StatusResponse.SUCCESS) {
+            alert.information(
+                    "Mohon tunggu",
+                    "Kasir akan mengantarkan bill ke meja anda");
+            daftarPesanan.getAlert().hide();
         }
     }
 
