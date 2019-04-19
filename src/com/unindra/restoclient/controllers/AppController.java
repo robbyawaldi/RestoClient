@@ -46,7 +46,6 @@ public class AppController implements Initializable {
             while (!Thread.interrupted()) {
                 try {
                     Item.updateItems();
-                    System.out.println("loop");
                     Thread.sleep(1000);
                 } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
@@ -182,6 +181,7 @@ public class AppController implements Initializable {
             });
             simpanButton.requestFocus();
             keluarButton.setOnAction(event -> settingDialog.getDialog().hide());
+            settingDialog.getDialog().show();
         }
     }
 
