@@ -53,9 +53,9 @@ public class AppController implements Initializable {
                 }
             }
         };
-
         Thread thread = new Thread(runnable);
         thread.start();
+
         // Daftar Pesanan
         Platform.runLater(() -> {
             pesananDialog = getDialog();

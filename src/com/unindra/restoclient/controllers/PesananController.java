@@ -17,13 +17,12 @@ import javafx.scene.control.TreeTableView;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import static com.unindra.restoclient.Rupiah.rupiah;
-import static com.unindra.restoclient.models.Menu.menu;
 import static com.unindra.restoclient.models.Item.getItems;
+import static com.unindra.restoclient.models.Menu.menu;
 import static java.util.Objects.requireNonNull;
 
 public class PesananController implements Initializable {
@@ -85,14 +84,8 @@ public class PesananController implements Initializable {
                                 alert.confirmation(
                                         "Anda yakin ingin menghapus pesanan ini?",
                                         e -> {
-                                            if (getItems().get(getIndex()).delete().getStatus() == StatusResponse.SUCCESS) {
-                                                try {
-                                                    Item.updateItems();
-                                                } catch (IOException e1) {
-                                                    e1.printStackTrace();
-                                                }
+                                            if (getItems().get(getIndex()).delete().getStatus() == StatusResponse.SUCCESS)
                                                 alert.getAlert().hide();
-                                            }
                                         });
                             });
 
