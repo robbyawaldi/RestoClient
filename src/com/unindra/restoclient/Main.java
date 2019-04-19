@@ -12,6 +12,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/app.fxml"));
+        stage.setOnCloseRequest(event -> System.exit(0));
         stage.getIcons().add(new Image("/icons/logo-ramen-bulet-merah-copy20x20.png"));
         stage.setTitle("Osaka Ramen");
         stage.setScene(new Scene(root));
