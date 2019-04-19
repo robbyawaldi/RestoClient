@@ -7,6 +7,7 @@ import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import com.unindra.restoclient.Dialog;
 import com.unindra.restoclient.models.Item;
 import com.unindra.restoclient.models.StatusResponse;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.Initializable;
@@ -103,7 +104,8 @@ public class PesananController implements Initializable {
             }
         });
 
-        getItems().addListener((ListChangeListener<Item>) c -> totalLabel.setText(rupiah(Item.getGrandTotal())));
+        getItems().addListener((ListChangeListener<Item>) c ->
+                Platform.runLater(() -> totalLabel.setText(rupiah(Item.getGrandTotal()))));
 
         pesananTableView.setRoot(new RecursiveTreeItem<>(getItems(), RecursiveTreeObject::getChildren));
         pesananTableView.getColumns().add(namaCol);
