@@ -64,7 +64,7 @@ public class AppController implements Initializable {
             JFXButton keluarButton = new JFXButton("Keluar");
 
             try {
-                pesananDialog.getAlert().setContent(getDialogLayout(
+                pesananDialog.getDialog().setContent(getDialogLayout(
                         new Label("Daftar Pesanan"),
                         FXMLLoader.load(getClass().getResource("/fxml/pesanan.fxml")),
                         pesanButton,
@@ -82,7 +82,7 @@ public class AppController implements Initializable {
                             "Anda yakin pesanan benar? pesanan tidak dapat dibatalkan setelah proses pemesanan berhasil",
                             e -> {
                                 pesan(items);
-                                dialog.getAlert().hide();
+                                dialog.getDialog().hide();
                             });
                 }
             });
@@ -96,7 +96,7 @@ public class AppController implements Initializable {
                     }
                 }
             });
-            keluarButton.setOnAction(event -> pesananDialog.getAlert().hide());
+            keluarButton.setOnAction(event -> pesananDialog.getDialog().hide());
         });
 
         // Daftar Menu
@@ -146,7 +146,7 @@ public class AppController implements Initializable {
     }
 
     public void daftarPesananHandle() {
-        pesananDialog.getAlert().show();
+        pesananDialog.getDialog().show();
     }
 
     public void settingHandle(MouseEvent mouseEvent) {
@@ -159,7 +159,7 @@ public class AppController implements Initializable {
 
             Dialog settingDialog = getDialog();
             try {
-                settingDialog.getAlert().setContent(
+                settingDialog.getDialog().setContent(
                         getDialogLayout(
                                 new Label("Setting"),
                                 fxmlLoader.load(),
@@ -181,7 +181,7 @@ public class AppController implements Initializable {
                         e -> System.exit(0));
             });
             simpanButton.requestFocus();
-            keluarButton.setOnAction(event -> settingDialog.getAlert().hide());
+            keluarButton.setOnAction(event -> settingDialog.getDialog().hide());
         }
     }
 

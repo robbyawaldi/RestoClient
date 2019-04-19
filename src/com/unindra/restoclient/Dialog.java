@@ -13,13 +13,13 @@ import javafx.stage.Stage;
 
 public class Dialog {
 
-    private JFXAlert<String> alert;
+    private JFXAlert<String> dialog;
 
     public Dialog(Stage stage) {
-        alert = new JFXAlert<>(stage);
-        alert.setOverlayClose(false);
-        alert.initModality(Modality.APPLICATION_MODAL);
-        alert.setAnimation(JFXAlertAnimation.TOP_ANIMATION);
+        dialog = new JFXAlert<>(stage);
+        dialog.setOverlayClose(false);
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.setAnimation(JFXAlertAnimation.TOP_ANIMATION);
     }
 
     public static JFXDialogLayout getDialogLayout(Node heading, Node body, JFXButton... buttons) {
@@ -30,32 +30,32 @@ public class Dialog {
         return dialogLayout;
     }
 
-    public JFXAlert<String> getAlert() {
-        return alert;
+    public JFXAlert<String> getDialog() {
+        return dialog;
     }
 
     public void information(String header, String body) {
         JFXButton okButton = new JFXButton("Ok");
-        okButton.setOnAction(event -> alert.hide());
-        alert.setContent(getDialogLayout(
+        okButton.setOnAction(event -> dialog.hide());
+        dialog.setContent(getDialogLayout(
                 new Label(header),
                 new Label(body),
                 okButton
         ));
-        alert.show();
+        dialog.show();
     }
 
     public void confirmation(String body, EventHandler<ActionEvent> eventConfirm) {
         JFXButton yaButton = new JFXButton("Ya");
         JFXButton batalButton = new JFXButton("Batal");
         yaButton.setOnAction(eventConfirm);
-        batalButton.setOnAction(event -> alert.hide());
-        alert.setContent(getDialogLayout(
+        batalButton.setOnAction(event -> dialog.hide());
+        dialog.setContent(getDialogLayout(
                 new Label("Konfirmasi"),
                 new Label(body),
                 yaButton,
                 batalButton
         ));
-        alert.show();
+        dialog.show();
     }
 }

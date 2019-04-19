@@ -86,7 +86,7 @@ public class PesananController implements Initializable {
                                         "Anda yakin ingin menghapus pesanan ini?",
                                         e -> {
                                             if (getItems().get(getIndex()).delete().getStatus() == StatusResponse.SUCCESS)
-                                                alert.getAlert().hide();
+                                                alert.getDialog().hide();
                                         });
                             });
 
