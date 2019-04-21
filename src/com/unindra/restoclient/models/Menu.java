@@ -28,12 +28,17 @@ public class Menu {
         this.deskripsi = deskripsi;
     }
 
-    private static List<Menu> menus() throws IOException {
-        Menu[] daftarMenus = gson().fromJson(get("/menus").getData(), Menu[].class);
-        return FXCollections.observableArrayList(daftarMenus);
+    private static List<Menu> menus() {
+        try {
+            Menu[] daftarMenus = gson().fromJson(get("/menus").getData(), Menu[].class);
+            return FXCollections.observableArrayList(daftarMenus);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return FXCollections.observableArrayList();
+        }
     }
 
-    public static List<Menu> menus(String type) throws IOException {
+    public static List<Menu> menus(String type) {
         return menus()
                 .stream()
                 .filter(menu -> menu.tipe_menu.equals(type))
@@ -41,15 +46,11 @@ public class Menu {
     }
 
     public static Menu menu(Item item) {
-        try {
-            return menus()
-                    .stream()
-                    .filter(menu -> menu.id_menu == item.getId_menu())
-                    .findFirst()
-                    .orElse(null);
-        } catch (IOException e) {
-            return null;
-        }
+        return menus()
+                .stream()
+                .filter(menu -> menu.id_menu == item.getId_menu())
+                .findFirst()
+                .orElse(null);
     }
 
     int getId_menu() {
