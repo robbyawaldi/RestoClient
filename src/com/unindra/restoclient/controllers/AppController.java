@@ -48,9 +48,17 @@ public class AppController implements Initializable {
                     Item.updateItems();
                     Thread.sleep(1000);
                 } catch (IOException | InterruptedException e) {
-                    e.printStackTrace();
+                    break;
                 }
             }
+            ramenButton.setDisable(true);
+            minumanButton.setDisable(true);
+            cemilanButton.setDisable(true);
+            lainnyaButton.setDisable(true);
+            pesananButton.setDisable(true);
+            Platform.runLater(() -> getDialog().information(
+                    "Koneksi Terputus",
+                    "Buka setting untuk mengubah alamat host atau port"));
         };
         Thread thread = new Thread(runnable);
         thread.start();
@@ -110,16 +118,7 @@ public class AppController implements Initializable {
             setAllMenuPane(Menu.menus("cemilan"), cemilanPane, "body-cemilan-pane");
             setAllMenuPane(Menu.menus("lainnya"), lainnyaPane, "body-lainnya-pane");
             mainPane.setContent(ramenPane);
-        } catch (IOException e) {
-            ramenButton.setDisable(true);
-            minumanButton.setDisable(true);
-            cemilanButton.setDisable(true);
-            lainnyaButton.setDisable(true);
-            pesananButton.setDisable(true);
-            Platform.runLater(() -> getDialog().information(
-                    "Koneksi Terputus",
-                    "Buka setting untuk mengubah alamat host atau port"));
-        }
+        } catch (IOException ignored) { }
     }
 
     public void menuHandle(ActionEvent actionEvent) {

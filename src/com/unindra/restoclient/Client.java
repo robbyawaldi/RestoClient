@@ -52,7 +52,6 @@ public class Client {
             String result = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
             return gson().fromJson(result, StandardResponse.class);
         } catch (IOException e) {
-            e.printStackTrace();
             return new StandardResponse(StatusResponse.ERROR);
         }
     }
