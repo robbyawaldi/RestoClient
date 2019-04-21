@@ -11,7 +11,7 @@ public class Setting {
     private String host;
     private String port;
     @Expose
-    private static final String fileName = "resources/json/setting.json";
+    private static final String fileName = "setting.json";
 
     private Setting(String no_meja, String host, String port) {
         this.no_meja = no_meja;
@@ -21,8 +21,8 @@ public class Setting {
 
     public static Setting setting() {
         try {
-            return new Gson().fromJson(new JsonReader(new FileReader(fileName)), Setting.class);
-        } catch (FileNotFoundException e) {
+            return new Gson().fromJson(new JsonReader(new FileReader(new File(fileName))), Setting.class);
+        } catch (IOException e) {
             e.printStackTrace();
             return new Setting("0", "localhost", "4567");
         }
