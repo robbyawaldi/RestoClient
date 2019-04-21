@@ -112,13 +112,11 @@ public class AppController implements Initializable {
         cemilanPane = new VBox();
         lainnyaPane = new VBox();
 
-        try {
-            setRamenPane(Menu.menus("ramen"));
-            setAllMenuPane(Menu.menus("minuman"), minumanPane, "body-minuman-pane");
-            setAllMenuPane(Menu.menus("cemilan"), cemilanPane, "body-cemilan-pane");
-            setAllMenuPane(Menu.menus("lainnya"), lainnyaPane, "body-lainnya-pane");
-            mainPane.setContent(ramenPane);
-        } catch (IOException ignored) { }
+        setRamenPane(Menu.menus("ramen"));
+        setAllMenuPane(Menu.menus("minuman"), minumanPane, "body-minuman-pane");
+        setAllMenuPane(Menu.menus("cemilan"), cemilanPane, "body-cemilan-pane");
+        setAllMenuPane(Menu.menus("lainnya"), lainnyaPane, "body-lainnya-pane");
+        mainPane.setContent(ramenPane);
     }
 
     public void menuHandle(ActionEvent actionEvent) {

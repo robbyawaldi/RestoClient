@@ -24,7 +24,6 @@ import java.util.ResourceBundle;
 import static com.unindra.restoclient.Rupiah.rupiah;
 import static com.unindra.restoclient.models.Item.getItems;
 import static com.unindra.restoclient.models.Menu.menu;
-import static java.util.Objects.requireNonNull;
 
 public class PesananController implements Initializable {
 
@@ -39,9 +38,9 @@ public class PesananController implements Initializable {
         TreeTableColumn<Item, String> totalCol = new TreeTableColumn<>("Total");
         TreeTableColumn<Item, String> hapusCol = new TreeTableColumn<>("Hapus");
 
-        namaCol.setCellValueFactory(param -> requireNonNull(menu(param.getValue().getValue())).namaProperty());
+        namaCol.setCellValueFactory(param -> menu(param.getValue().getValue()).namaProperty());
         jumlahCol.setCellValueFactory(param -> param.getValue().getValue().jumlahProperty());
-        hargaCol.setCellValueFactory(param -> requireNonNull(menu(param.getValue().getValue())).hargaProperty());
+        hargaCol.setCellValueFactory(param -> menu(param.getValue().getValue()).hargaProperty());
         totalCol.setCellValueFactory(param -> param.getValue().getValue().totalProperty());
         hapusCol.setCellValueFactory(param -> new SimpleStringProperty(""));
 
@@ -56,7 +55,7 @@ public class PesananController implements Initializable {
                             setText(null);
                         } else {
                             Item i = getItems().get(getIndex());
-                            if (requireNonNull(menu(i)).getTipe_menu().equals("ramen"))
+                            if (menu(i).getTipe_menu().equals("ramen"))
                                 setText(item + " lv." + i.getLevel_item());
                             else setText(item);
                         }
