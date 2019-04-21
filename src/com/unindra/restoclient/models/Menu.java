@@ -33,7 +33,6 @@ public class Menu {
             Menu[] daftarMenus = gson().fromJson(get("/menus").getData(), Menu[].class);
             return FXCollections.observableArrayList(daftarMenus);
         } catch (IOException e) {
-            e.printStackTrace();
             return FXCollections.observableArrayList();
         }
     }
