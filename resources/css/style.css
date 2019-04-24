@@ -39,7 +39,11 @@
 }
 
 .lainnya {
-    -fx-graphic: url('/icons/icons8-rice-bowl-20.png');
+     -fx-graphic: url('/icons/icons8-rice-bowl-20.png');
+}
+
+.hapus {
+    -fx-graphic: url('/icons/icons8-delete-20.png');
 }
 
 .ramen:hover, .minuman:hover, .cemilan:hover, .lainnya:hover, .pesanan-button:hover {
@@ -123,6 +127,10 @@
     -fx-font-size: 14pt;
     -fx-prompt-text-fill: white;
     -fx-text-fill: white;
+}
+
+.tree-table-cell {
+    -fx-alignment: center;
 }
 
 .ramen-image-view {

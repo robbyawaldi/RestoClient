@@ -17,7 +17,6 @@ public class Dialog {
 
     public Dialog(Stage stage) {
         dialog = new JFXAlert<>(stage);
-        dialog.setOverlayClose(false);
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.setAnimation(JFXAlertAnimation.TOP_ANIMATION);
     }

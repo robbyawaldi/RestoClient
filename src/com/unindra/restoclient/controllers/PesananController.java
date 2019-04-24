@@ -36,7 +36,7 @@ public class PesananController implements Initializable {
         TreeTableColumn<Item, Integer> jumlahCol = new TreeTableColumn<>("Jumlah");
         TreeTableColumn<Item, String> hargaCol = new TreeTableColumn<>("Harga");
         TreeTableColumn<Item, String> totalCol = new TreeTableColumn<>("Total");
-        TreeTableColumn<Item, String> hapusCol = new TreeTableColumn<>("Hapus");
+        TreeTableColumn<Item, String> hapusCol = new TreeTableColumn<>("Status");
 
         namaCol.setCellValueFactory(param -> menu(param.getValue().getValue()).namaProperty());
         jumlahCol.setCellValueFactory(param -> param.getValue().getValue().jumlahProperty());
@@ -69,7 +69,6 @@ public class PesananController implements Initializable {
             public TreeTableCell<Item, String> call(TreeTableColumn<Item, String> param) {
                 return new TreeTableCell<Item, String>() {
                     final JFXButton button = new JFXButton("hapus");
-
                     @Override
                     protected void updateItem(String item, boolean empty) {
                         super.updateItem(item, empty);
@@ -77,7 +76,8 @@ public class PesananController implements Initializable {
                             setText(null);
                             setGraphic(null);
                         } else {
-                            button.setStyle("-fx-background-color: #EAEAEA");
+                            button.setFocusTraversable(false);
+                            button.getStyleClass().add("hapus");
                             button.setOnAction(event -> {
                                 Dialog alert = new Dialog((Stage) pesananTableView.getScene().getWindow());
 
