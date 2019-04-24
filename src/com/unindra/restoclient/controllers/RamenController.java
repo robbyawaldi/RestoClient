@@ -2,11 +2,10 @@ package com.unindra.restoclient.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextField;
 import com.unindra.restoclient.Dialog;
 import com.unindra.restoclient.Rupiah;
-import com.unindra.restoclient.models.Menu;
 import com.unindra.restoclient.models.Item;
+import com.unindra.restoclient.models.Menu;
 import com.unindra.restoclient.models.StandardResponse;
 import com.unindra.restoclient.models.StatusResponse;
 import javafx.collections.FXCollections;
@@ -16,6 +15,8 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class RamenController {
     public VBox rootPane;
     public JFXComboBox<Integer> levelCombo;
@@ -24,7 +25,9 @@ public class RamenController {
     public Label hargaLabel;
     public Circle circle;
     public JFXButton tambahButton;
-    public JFXTextField jumlahField;
+    public Label jumlahLabel;
+
+    private AtomicInteger jumlah = new AtomicInteger(1);
 
     void setMenu(Menu menu) {
         namaLabel.setText(menu.getNama_menu().toUpperCase());
@@ -33,17 +36,11 @@ public class RamenController {
         circle.setFill(new ImagePattern(menu.getImage()));
         levelCombo.setItems(FXCollections.observableArrayList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
 
-        jumlahField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                jumlahField.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-        });
-
         tambahButton.setOnAction(event -> {
             Dialog alert = new Dialog((Stage) rootPane.getScene().getWindow());
 
             if (validasi()) {
-                Item item = new Item(menu, Integer.valueOf(jumlahField.getText()), levelCombo.getValue());
+                Item item = new Item(menu, jumlah.get(), levelCombo.getValue());
                 StandardResponse standardResponse = item.post();
                 if (standardResponse.getStatus() == StatusResponse.SUCCESS) {
                     alert.information(
@@ -59,19 +56,30 @@ public class RamenController {
             } else {
                 alert.information(
                         "Gagal",
-                        "Level atau jumlah belum dimasukkan");
+                        "Level belum dimasukkan");
                 reset();
             }
         });
     }
 
     private void reset() {
-        jumlahField.setText("");
+        jumlah.set(1);
+        jumlahLabel.setText(String.valueOf(jumlah.get()));
         levelCombo.getSelectionModel().clearSelection();
         rootPane.requestFocus();
     }
 
     private boolean validasi() {
-        return !jumlahField.getText().isEmpty() && !levelCombo.getSelectionModel().isEmpty();
+        return !levelCombo.getSelectionModel().isEmpty();
+    }
+
+    public void kurangJmlHandle() {
+        if (jumlah.decrementAndGet() > 0) {
+            jumlahLabel.setText(String.valueOf(jumlah.get()));
+        } else jumlah.incrementAndGet();
+    }
+
+    public void tambahJmlHandle() {
+        jumlahLabel.setText(String.valueOf(jumlah.incrementAndGet()));
     }
 }

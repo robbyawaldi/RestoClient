@@ -23,6 +23,7 @@
     -fx-graphic: url('/icons/icons8-add-shopping-cart-30.png');
     -fx-font-family: 'OpenSans';
     -fx-font-weight: bold;
+    -fx-font-size: 12pt;
     -fx-text-fill: white;
 }
 
@@ -44,6 +45,14 @@
 
 .hapus {
     -fx-graphic: url('/icons/icons8-delete-20.png');
+}
+
+.tambah {
+    -fx-graphic: url('/icons/icons8-plus-30.png');
+}
+
+.kurang {
+    -fx-graphic: url('/icons/icons8-minus-30.png');
 }
 
 .ramen:hover, .minuman:hover, .cemilan:hover, .lainnya:hover, .pesanan-button:hover {
@@ -116,6 +125,7 @@
 
 .combo-box > .list-cell {
     -fx-text-fill: white;
+    -fx-font-size: 12pt;
 }
 
 .combo-box .arrow {
