@@ -95,7 +95,7 @@ public class AppController implements Initializable {
             });
             bayarButton.setOnAction(event -> {
                 List<Item> items = getItems("diproses");
-                if (items.size() == getItems().size()) {
+                if (items.size() == getItems().size() && getItems().size() != 0) {
                     try {
                         bayar();
                     } catch (IOException e) {

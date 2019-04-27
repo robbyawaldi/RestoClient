@@ -41,7 +41,7 @@
             <Insets top="10.0" />
         </padding>
     </HBox>
-    <HBox alignment="BOTTOM_CENTER" prefHeight="54.0" prefWidth="740.0" spacing="20.0">
+    <HBox alignment="BOTTOM_CENTER" prefHeight="54.0" prefWidth="740.0" spacing="30.0">
         <padding>
             <Insets left="10.0" />
         </padding>
