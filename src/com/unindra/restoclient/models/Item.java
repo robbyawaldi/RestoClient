@@ -15,10 +15,9 @@ import java.util.stream.Collectors;
 
 import static com.unindra.restoclient.Client.*;
 import static com.unindra.restoclient.Rupiah.rupiah;
-import static com.unindra.restoclient.models.Menu.menu;
 import static com.unindra.restoclient.models.Level.level;
+import static com.unindra.restoclient.models.Menu.menu;
 import static com.unindra.restoclient.models.Setting.setting;
-import static java.util.Objects.requireNonNull;
 
 public class Item extends RecursiveTreeObject<Item> {
     private int id_item;
@@ -87,7 +86,7 @@ public class Item extends RecursiveTreeObject<Item> {
 
     private int getTotal() {
         try {
-            return (requireNonNull(menu(this)).getHarga_menu() + level(level_item).getHarga_level()) * jumlah_item;
+            return (menu(this)).getHarga_menu() + level(level_item).getHarga_level() * jumlah_item;
         } catch (IOException e) {
             return 0;
         }

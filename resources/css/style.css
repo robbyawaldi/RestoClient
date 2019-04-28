@@ -61,7 +61,7 @@
 
 .ramen-pressed {
     -fx-graphic: url('/icons/icons8-noodles-20-white.png');
-    -fx-background-color: #FCB623;
+    -fx-background-color: #F18F01;
     -fx-text-fill: white;
 }
 
@@ -73,7 +73,7 @@
 
 .cemilan-pressed {
     -fx-graphic: url('/icons/icons8-french-fries-20-white.png');
-    -fx-background-color: #3423A6;
+    -fx-background-color: #080357;
     -fx-text-fill: white;
 }
 
@@ -158,7 +158,7 @@
 }
 
 .body-ramen-pane0 {
-    -fx-background-color: #FCB623;
+    -fx-background-color: #F18F01;
 }
 
 .body-ramen-pane1 {
@@ -178,7 +178,7 @@
 }
 
 .body-cemilan-pane {
-    -fx-background-color: #3423A6;
+    -fx-background-color: #080357;
 }
 
 .body-lainnya-pane {
