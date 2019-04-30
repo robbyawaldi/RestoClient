@@ -76,6 +76,8 @@ public class PesananController implements Initializable {
                             setText(null);
                             setGraphic(null);
                         } else {
+                            Item thisItem = getItems().get(getIndex());
+
                             button.setFocusTraversable(false);
                             button.getStyleClass().add("hapus");
                             button.setOnAction(event -> {
@@ -84,14 +86,13 @@ public class PesananController implements Initializable {
                                 alert.confirmation(
                                         "Anda yakin ingin menghapus pesanan ini?",
                                         e -> {
-                                            if (getItems().get(getIndex()).delete().getStatus() == StatusResponse.SUCCESS)
+                                            if (thisItem.delete().getStatus() == StatusResponse.SUCCESS)
                                                 alert.getDialog().hide();
                                         });
                             });
 
-                            Item i = getItems().get(getIndex());
-                            if (!i.getStatus_item().equals("belum dipesan")) {
-                                setText(i.getStatus_item());
+                            if (!thisItem.getStatus_item().equals("belum dipesan")) {
+                                setText(thisItem.getStatus_item());
                                 setGraphic(null);
                             } else {
                                 setText(null);

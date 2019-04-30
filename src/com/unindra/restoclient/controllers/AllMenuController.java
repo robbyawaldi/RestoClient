@@ -12,6 +12,8 @@ import javafx.stage.Stage;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.unindra.restoclient.models.Item.getItems;
+
 public class AllMenuController {
 
     public Label namaLabel;
@@ -28,20 +30,20 @@ public class AllMenuController {
         tambahButton.setOnAction(event -> {
             Dialog alert = new Dialog((Stage) tambahButton.getScene().getWindow());
 
-            Item item = new Item(menu, jumlah.get());
-            StandardResponse standardResponse = item.post();
-            if (standardResponse.getStatus() == StatusResponse.SUCCESS) {
-                alert.information(
-                        "Berhasil",
-                        "Pesanan anda akan disimpan ke daftar pesanan, " +
-                                "masuk ke daftar pesanan untuk melanjutkan proses pemesanan");
-                reset();
-            } else {
-                alert.information(
+            if (getItems("dibayar").isEmpty()) {
+                Item item = new Item(menu, jumlah.get());
+                StandardResponse standardResponse = item.post();
+                if (standardResponse.getStatus() == StatusResponse.SUCCESS)
+                    alert.information(
+                            "Berhasil",
+                            "Pesanan anda disimpan ke daftar pesanan");
+                else alert.information(
                         "Gagal",
                         "Pesanan anda gagal diproses");
-                reset();
-            }
+            } else alert.information(
+                    "Gagal",
+                    "Proses pembayaran belum selesai");
+            reset();
         });
     }
 

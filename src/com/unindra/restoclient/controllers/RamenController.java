@@ -17,6 +17,8 @@ import javafx.stage.Stage;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.unindra.restoclient.models.Item.getItems;
+
 public class RamenController {
     public VBox rootPane;
     public JFXComboBox<Integer> levelCombo;
@@ -39,26 +41,24 @@ public class RamenController {
         tambahButton.setOnAction(event -> {
             Dialog alert = new Dialog((Stage) rootPane.getScene().getWindow());
 
-            if (validasi()) {
-                Item item = new Item(menu, jumlah.get(), levelCombo.getValue());
-                StandardResponse standardResponse = item.post();
-                if (standardResponse.getStatus() == StatusResponse.SUCCESS) {
-                    alert.information(
-                            "Berhasil",
-                            "Pesanan anda akan disimpan ke daftar pesanan, masuk ke daftar pesanan untuk melanjutkan proses pemesanan");
-                    reset();
-                } else {
-                    alert.information(
+            if (getItems("dibayar").isEmpty()) {
+                if (!levelCombo.getSelectionModel().isEmpty()) {
+                    Item item = new Item(menu, jumlah.get(), levelCombo.getValue());
+                    StandardResponse standardResponse = item.post();
+                    if (standardResponse.getStatus() == StatusResponse.SUCCESS)
+                        alert.information(
+                                "Berhasil",
+                                "Pesanan anda disimpan ke daftar pesanan");
+                    else alert.information(
                             "Gagal",
                             "Pesanan anda gagal diproses");
-                    reset();
-                }
-            } else {
-                alert.information(
+                } else alert.information(
                         "Gagal",
-                        "Level belum dimasukkan");
-                reset();
-            }
+                        "Proses pembayaran belum selesai");
+            } else alert.information(
+                    "Gagal",
+                    "Level belum dimasukkan");
+            reset();
         });
     }
 
@@ -67,10 +67,6 @@ public class RamenController {
         jumlahLabel.setText(String.valueOf(jumlah.get()));
         levelCombo.getSelectionModel().clearSelection();
         rootPane.requestFocus();
-    }
-
-    private boolean validasi() {
-        return !levelCombo.getSelectionModel().isEmpty();
     }
 
     public void kurangJmlHandle() {

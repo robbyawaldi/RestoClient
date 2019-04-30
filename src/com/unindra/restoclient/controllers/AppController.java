@@ -2,7 +2,9 @@ package com.unindra.restoclient.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.unindra.restoclient.Dialog;
-import com.unindra.restoclient.models.*;
+import com.unindra.restoclient.models.Item;
+import com.unindra.restoclient.models.Menu;
+import com.unindra.restoclient.models.Setting;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +22,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static com.unindra.restoclient.Client.get;
 import static com.unindra.restoclient.Dialog.getDialogLayout;
 import static com.unindra.restoclient.models.Item.getItems;
 import static com.unindra.restoclient.models.Setting.setting;
@@ -37,12 +38,32 @@ public class AppController implements Initializable {
     private VBox minumanPane;
     private VBox cemilanPane;
     private VBox lainnyaPane;
+    private VBox pesananPane;
 
     private Dialog pesananDialog;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Runnable runnable = () -> {
+        // Daftar Menu
+        ramenPane = new VBox();
+        minumanPane = new VBox();
+        cemilanPane = new VBox();
+        lainnyaPane = new VBox();
+
+        setRamenPane(Menu.menus("ramen"));
+        setAllMenuPane(Menu.menus("minuman"), minumanPane, "body-minuman-pane");
+        setAllMenuPane(Menu.menus("cemilan"), cemilanPane, "body-cemilan-pane");
+        setAllMenuPane(Menu.menus("lainnya"), lainnyaPane, "body-lainnya-pane");
+        mainPane.setContent(ramenPane);
+
+        try {
+            pesananPane = FXMLLoader.load(getClass().getResource("/fxml/pesanan.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Meminta data item ke server setiap 1 detik
+        Thread thread = new Thread(() -> {
             while (!Thread.interrupted()) {
                 try {
                     Item.updateItems();
@@ -56,11 +77,11 @@ public class AppController implements Initializable {
             cemilanButton.setDisable(true);
             lainnyaButton.setDisable(true);
             pesananButton.setDisable(true);
-            Platform.runLater(() -> getDialog().information(
-                    "Koneksi Terputus",
-                    "Buka setting untuk mengubah alamat host atau port"));
-        };
-        Thread thread = new Thread(runnable);
+            Platform.runLater(() ->
+                    getDialog().information(
+                            "Koneksi Terputus",
+                            "Buka setting untuk mengubah alamat host atau port"));
+        });
         thread.start();
 
         // Daftar Pesanan
@@ -70,53 +91,46 @@ public class AppController implements Initializable {
             JFXButton bayarButton = new JFXButton("Bayar");
             JFXButton keluarButton = new JFXButton("Keluar");
 
-            try {
-                pesananDialog.getDialog().setContent(getDialogLayout(
-                        new Label("Daftar Pesanan"),
-                        FXMLLoader.load(getClass().getResource("/fxml/pesanan.fxml")),
-                        pesanButton,
-                        bayarButton,
-                        keluarButton));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            pesananDialog.getDialog()
+                    .setContent(
+                            getDialogLayout(
+                                    new Label("Daftar Pesanan"),
+                                    pesananPane,
+                                    pesanButton,
+                                    bayarButton,
+                                    keluarButton));
 
             pesanButton.setOnAction(event -> {
-                List<Item> items = getItems("belum dipesan");
-                if (!items.isEmpty()) {
+                if (!getItems("belum dipesan").isEmpty()) {
                     Dialog dialog = getDialog();
                     dialog.confirmation(
-                            "Anda yakin pesanan benar? pesanan tidak dapat dibatalkan setelah proses pemesanan berhasil",
+                            "Pesanan tidak dapat dibatalkan setelah proses pemesanan berhasil",
                             e -> {
-                                pesan(items);
-                                dialog.getDialog().hide();
+                                if (Item.pesan()) {
+                                    getDialog().information(
+                                            "Berhasil",
+                                            "Pesanan anda berhasil! mohon tunggu pesanan disajikan");
+                                    dialog.getDialog().hide();
+                                }
                             });
                 }
             });
+
             bayarButton.setOnAction(event -> {
-                List<Item> items = getItems("diproses");
-                if (items.size() == getItems().size() && getItems().size() != 0) {
-                    try {
-                        bayar();
+                if (getItems("diproses").size() == getItems().size())
+                    if (getItems().size() != 0) try {
+                        if (Item.bayar())
+                            getDialog().information(
+                                    "Mohon tunggu",
+                                    "Kasir akan mengantarkan bill ke meja anda");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
             });
+
             keluarButton.setOnAction(event -> pesananDialog.getDialog().hide());
         });
 
-        // Daftar Menu
-        ramenPane = new VBox();
-        minumanPane = new VBox();
-        cemilanPane = new VBox();
-        lainnyaPane = new VBox();
-
-        setRamenPane(Menu.menus("ramen"));
-        setAllMenuPane(Menu.menus("minuman"), minumanPane, "body-minuman-pane");
-        setAllMenuPane(Menu.menus("cemilan"), cemilanPane, "body-cemilan-pane");
-        setAllMenuPane(Menu.menus("lainnya"), lainnyaPane, "body-lainnya-pane");
-        mainPane.setContent(ramenPane);
     }
 
     public void menuHandle(ActionEvent actionEvent) {
@@ -221,28 +235,6 @@ public class AppController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    private void pesan(List<Item> items) {
-        items.forEach(Item::pesan);
-
-        boolean success = true;
-        for (Item item : items) success &= item.put().getStatus() == StatusResponse.SUCCESS;
-
-        if (success && !items.isEmpty()) {
-            getDialog().information(
-                    "Berhasil",
-                    "Pesanan anda berhasil! mohon tunggu pesanan disajikan");
-        }
-    }
-
-    private void bayar() throws IOException {
-        StandardResponse standardResponse = get("/bayar/" + setting().getNo_meja());
-        if (standardResponse.getStatus() == StatusResponse.SUCCESS) {
-            getDialog().information(
-                    "Mohon tunggu",
-                    "Kasir akan mengantarkan bill ke meja anda");
         }
     }
 

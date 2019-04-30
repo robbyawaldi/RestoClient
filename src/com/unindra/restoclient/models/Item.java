@@ -31,6 +31,7 @@ public class Item extends RecursiveTreeObject<Item> {
     @Expose
     private static ObservableList<Item> items = FXCollections.observableArrayList();
 
+    // Constructor
     private Item(int id_menu, int jumlah_item, int lvl_item, String no_meja, String status_item) {
         this.id_item = 0;
         this.id_menu = id_menu;
@@ -48,6 +49,56 @@ public class Item extends RecursiveTreeObject<Item> {
         this(menu.getId_menu(), jumlah_item, lvl_item, setting().getNo_meja(), "belum dipesan");
     }
 
+    // Sinkronisasi collections dengan server
+    public static void updateItems() throws IOException {
+        StandardResponse standardResponse = get(paramUrl + "/" + setting().getNo_meja());
+        if (standardResponse.getStatus() == StatusResponse.SUCCESS) {
+            if (standardResponse.getMessage() == null) {
+                Item[] items = gson().fromJson(standardResponse.getData(), Item[].class);
+                for (Item item : items) item.setChildren(FXCollections.observableArrayList());
+                Item.items.setAll(items);
+            }
+        }
+    }
+
+    // Pesan
+    public static boolean pesan() {
+        getItems("belum dipesan").forEach(item -> item.status_item = "dipesan");
+
+        return getItems("dipesan")
+                .stream()
+                .map(item -> item.put().getStatus() == StatusResponse.SUCCESS)
+                .reduce(true, (a, b) -> a && b);
+    }
+
+    // Bayar
+    public static boolean bayar() throws IOException {
+        getItems("diproses").forEach(item -> item.status_item = "dibayar");
+
+        boolean success = getItems("dibayar").stream()
+                .map(item -> item.put().getStatus() == StatusResponse.SUCCESS)
+                .reduce(true, (a, b) -> a && b);
+
+        StandardResponse standardResponse = get("/bayar/" + setting().getNo_meja());
+        return success && standardResponse.getStatus() == StatusResponse.SUCCESS;
+    }
+
+    // Post
+    public StandardResponse post() {
+        return send(paramUrl, "POST", gson().toJson(this));
+    }
+
+    // Put
+    private StandardResponse put() {
+        return send(paramUrl, "PUT", gson().toJson(this));
+    }
+
+    // Delete
+    public StandardResponse delete() {
+        return send(paramUrl, "DELETE", gson().toJson(this));
+    }
+
+    // Getter
     public static ObservableList<Item> getItems() {
         return items;
     }
@@ -57,31 +108,6 @@ public class Item extends RecursiveTreeObject<Item> {
                 .stream()
                 .filter(item -> item.getStatus_item().equals(status_item))
                 .collect(Collectors.toList());
-    }
-
-    public static void updateItems() throws IOException {
-        StandardResponse standardResponse = get(paramUrl + "/" + setting().getNo_meja());
-        if (standardResponse.getStatus() == StatusResponse.SUCCESS) {
-            Item[] items = gson().fromJson(standardResponse.getData(), Item[].class);
-            for (Item item : items) item.setChildren(FXCollections.observableArrayList());
-            Item.items.setAll(items);
-        }
-    }
-
-    public void pesan() {
-        this.status_item = "dipesan";
-    }
-
-    public StandardResponse post() {
-        return send(paramUrl, "POST", gson().toJson(this));
-    }
-
-    public StandardResponse put() {
-        return send(paramUrl, "PUT", gson().toJson(this));
-    }
-
-    public StandardResponse delete() {
-        return send(paramUrl, "DELETE", gson().toJson(this));
     }
 
     private int getTotal() {
@@ -108,6 +134,7 @@ public class Item extends RecursiveTreeObject<Item> {
         return status_item;
     }
 
+    // Property
     public ObjectProperty<Integer> jumlahProperty() {
         return new SimpleObjectProperty<>(jumlah_item);
     }
