@@ -61,7 +61,7 @@
 
 .ramen-pressed {
     -fx-graphic: url('/icons/icons8-noodles-20-white.png');
-    -fx-background-color: #F18F01;
+    -fx-background-color: #7A28CB;
     -fx-text-fill: white;
 }
 
@@ -157,20 +157,8 @@
     -fx-background-color: white;
 }
 
-.body-ramen-pane0 {
-    -fx-background-color: #F18F01;
-}
-
-.body-ramen-pane1 {
-    -fx-background-color: #F9564F;
-}
-
-.body-ramen-pane2 {
-    -fx-background-color: #B33F62;
-}
-
-.body-ramen-pane3 {
-    -fx-background-color: #0C0A3E;
+.body-ramen-pane {
+    -fx-background-color: #7A28CB;
 }
 
 .body-minuman-pane {

@@ -11,10 +11,10 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="rootPane" alignment="CENTER" minHeight="-Infinity" prefHeight="430.0" prefWidth="800.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unindra.restoclient.controllers.RamenController">
-    <HBox alignment="TOP_CENTER" prefHeight="216.0" prefWidth="600.0" spacing="10.0" VBox.vgrow="ALWAYS">
-        <Circle fx:id="circle" fill="DODGERBLUE" radius="124.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="ramen-image-view" />
-        <VBox prefHeight="356.0" prefWidth="225.0" spacing="20.0">
+<VBox fx:id="rootPane" alignment="CENTER" minHeight="-Infinity" prefHeight="400.0" prefWidth="677.0" styleClass="body-ramen-pane" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unindra.restoclient.controllers.RamenController">
+    <HBox alignment="TOP_CENTER" prefHeight="258.0" prefWidth="617.0" spacing="60.0" VBox.vgrow="ALWAYS">
+        <Circle fx:id="circle" fill="DODGERBLUE" radius="100.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="ramen-image-view" />
+        <VBox prefHeight="306.0" prefWidth="200.0" spacing="20.0">
             <Label fx:id="namaLabel" text="Nama Makanan">
                 <styleClass>
                     <String fx:value="text-body" />
@@ -41,45 +41,41 @@
             <Insets top="10.0" />
         </padding>
     </HBox>
-    <HBox alignment="BOTTOM_CENTER" prefHeight="54.0" prefWidth="740.0" spacing="30.0">
+    <HBox alignment="BOTTOM_CENTER" prefHeight="54.0" prefWidth="617.0" spacing="60.0">
         <padding>
             <Insets left="10.0" />
         </padding>
         <VBox>
             <Label text="Level">
                 <styleClass>
-                    <String fx:value="text-body"/>
-                    <String fx:value="text-white"/>
+                    <String fx:value="text-body" />
+                    <String fx:value="text-white" />
                 </styleClass>
                 <font>
-                    <Font size="10.0"/>
+                    <Font size="10.0" />
                 </font>
             </Label>
-            <JFXComboBox fx:id="levelCombo" focusColor="WHITE" focusTraversable="false" maxHeight="-Infinity"
-                         minWidth="-Infinity" prefHeight="10.0" prefWidth="100.0" unFocusColor="WHITE"
-                         visibleRowCount="5"/>
+            <JFXComboBox fx:id="levelCombo" focusColor="WHITE" focusTraversable="false" maxHeight="-Infinity" minWidth="-Infinity" prefHeight="10.0" prefWidth="100.0" unFocusColor="WHITE" visibleRowCount="5" />
         </VBox>
-        <VBox alignment="TOP_CENTER" prefHeight="37.0" prefWidth="100.0" spacing="5.0">
-            <Label text="Jumlah">
+        <VBox alignment="TOP_CENTER" prefHeight="37.0" prefWidth="120.0" spacing="5.0">
+            <Label prefHeight="15.0" prefWidth="100.0" text="Jumlah">
                 <styleClass>
-                    <String fx:value="text-body"/>
-                    <String fx:value="text-white"/>
+                    <String fx:value="text-body" />
+                    <String fx:value="text-white" />
                 </styleClass>
                 <font>
-                    <Font size="10.0"/>
+                    <Font size="10.0" />
                 </font>
             </Label>
-            <HBox alignment="BASELINE_LEFT" prefHeight="19.0" prefWidth="100.0" spacing="5.0">
-                <JFXButton focusTraversable="false" mnemonicParsing="false" onAction="#kurangJmlHandle"
-                           styleClass="kurang"/>
-                <Label fx:id="jumlahLabel" text="1">
+            <HBox alignment="BASELINE_LEFT" prefHeight="19.0" prefWidth="100.0">
+                <JFXButton focusTraversable="false" mnemonicParsing="false" onAction="#kurangJmlHandle" styleClass="kurang" />
+                <Label fx:id="jumlahLabel" alignment="CENTER" prefHeight="17.0" prefWidth="20.0" text="1">
                    <styleClass>
-                       <String fx:value="text-body"/>
-                       <String fx:value="text-white"/>
+                       <String fx:value="text-body" />
+                       <String fx:value="text-white" />
                    </styleClass>
                 </Label>
-                <JFXButton focusTraversable="false" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
-                           onAction="#tambahJmlHandle" styleClass="tambah"/>
+                <JFXButton focusTraversable="false" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#tambahJmlHandle" styleClass="tambah" />
             </HBox>
         </VBox>
         <JFXButton fx:id="tambahButton" contentDisplay="TOP" focusTraversable="false" mnemonicParsing="false" prefHeight="54.0" prefWidth="82.0" styleClass="tambah-pesanan-button" text="Tambah">
@@ -92,6 +88,6 @@
         </JFXButton>
     </HBox>
     <padding>
-        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+        <Insets bottom="30.0" left="40.0" right="20.0" top="30.0" />
     </padding>
 </VBox>

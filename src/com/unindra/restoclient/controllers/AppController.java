@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -34,10 +35,10 @@ public class AppController implements Initializable {
     public JFXButton pesananButton;
     public ScrollPane mainPane;
 
-    private VBox ramenPane;
-    private VBox minumanPane;
-    private VBox cemilanPane;
-    private VBox lainnyaPane;
+    private FlowPane ramenPane;
+    private FlowPane minumanPane;
+    private FlowPane cemilanPane;
+    private FlowPane lainnyaPane;
     private VBox pesananPane;
 
     private Dialog pesananDialog;
@@ -45,10 +46,10 @@ public class AppController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Daftar Menu
-        ramenPane = new VBox();
-        minumanPane = new VBox();
-        cemilanPane = new VBox();
-        lainnyaPane = new VBox();
+        ramenPane = new FlowPane();
+        minumanPane = new FlowPane();
+        cemilanPane = new FlowPane();
+        lainnyaPane = new FlowPane();
 
         setRamenPane(Menu.menus("ramen"));
         setAllMenuPane(Menu.menus("minuman"), minumanPane, "body-minuman-pane");
@@ -200,42 +201,42 @@ public class AppController implements Initializable {
         ramenPane.setPrefWidth(800);
         ramenPane.setPrefHeight(500);
 
-        for (int i = 0; i < menuList.size(); i++) {
+        menuList.forEach(menu -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ramen.fxml"));
                 Parent root = fxmlLoader.load();
 
                 RamenController c = fxmlLoader.getController();
-                c.rootPane.getStyleClass().add("body-ramen-pane" + i % 4);
-                c.setMenu(menuList.get(i));
+                c.setMenu(menu);
 
                 ramenPane.getChildren().add(root);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+        });
     }
 
-    private void setAllMenuPane(List<Menu> menuList, VBox allMenuPane, String style) {
+    private void setAllMenuPane(List<Menu> menuList, FlowPane allMenuPane, String style) {
         allMenuPane.setPrefWidth(800);
         allMenuPane.setPrefHeight(500);
-        allMenuPane.setPadding(new Insets(50, 60, 0, 129));
-        allMenuPane.setSpacing(15);
+        allMenuPane.setHgap(30);
+        allMenuPane.setVgap(30);
+        allMenuPane.setPadding(new Insets(30,20,30,36));
         allMenuPane.getStyleClass().add(style);
 
-        for (Menu daftarMenu : menuList) {
+        menuList.forEach(menu -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/allmenu.fxml"));
                 Parent root = fxmlLoader.load();
 
                 AllMenuController c = fxmlLoader.getController();
-                c.setMenu(daftarMenu);
+                c.setMenu(menu);
 
                 allMenuPane.getChildren().add(root);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+        });
     }
 
     private Dialog getDialog() {
