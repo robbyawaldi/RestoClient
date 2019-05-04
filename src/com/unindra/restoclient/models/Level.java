@@ -27,11 +27,11 @@ public class Level {
         return FXCollections.observableArrayList();
     }
 
-    static Level level(int level) throws IOException {
+    public static Level level(int level) throws IOException {
         return levelList().stream().filter(l -> l.level_item == level).findFirst().orElse(null);
     }
 
-    int getHarga_level() {
+    public int getHarga_level() {
         return harga_level;
     }
 
