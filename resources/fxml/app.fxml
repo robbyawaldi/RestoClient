@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="500.0" prefWidth="690.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unindra.restoclient.controllers.AppController">
+<VBox prefHeight="470.0" prefWidth="690.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unindra.restoclient.controllers.AppController">
     <HBox alignment="BOTTOM_LEFT" prefHeight="69.0" prefWidth="800.0" spacing="5.0" styleClass="body-white">
         <ImageView fitHeight="50.0" fitWidth="50.0" onMousePressed="#settingHandle" pickOnBounds="true" preserveRatio="true">
             <HBox.margin>
