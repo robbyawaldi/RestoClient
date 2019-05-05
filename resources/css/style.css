@@ -61,25 +61,23 @@
 
 .ramen-pressed {
     -fx-graphic: url('/icons/icons8-noodles-20-white.png');
-    -fx-background-color: #7A28CB;
-    -fx-text-fill: white;
 }
 
 .minuman-pressed {
     -fx-graphic: url('/icons/icons8-soda-20-white.png');
-    -fx-background-color: #373F51;
-    -fx-text-fill: white;
 }
 
 .cemilan-pressed {
     -fx-graphic: url('/icons/icons8-french-fries-20-white.png');
-    -fx-background-color: #080357;
-    -fx-text-fill: white;
 }
 
 .lainnya-pressed {
     -fx-graphic: url('/icons/icons8-rice-bowl-20-white.png');
-    -fx-background-color: #2E5EAA;
+
+}
+
+.ramen-pressed, .minuman-pressed, .cemilan-pressed, .lainnya-pressed, .pesanan-button-pressed {
+    -fx-background-color: linear-gradient(to right bottom, #405de6, #5851db, #833ab4);
     -fx-text-fill: white;
 }
 
@@ -147,6 +145,12 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 10, 0, 0, 5);
 }
 
+.border {
+    -fx-border-width: 2;
+    -fx-border-color: white;
+    -fx-border-radius: 10pt;
+}
+
 /*******************************************************************************
  *                                                                             *
  * Pane 			                                                           *
@@ -157,25 +161,6 @@
     -fx-background-color: white;
 }
 
-.body-ramen-pane {
-    -fx-background-color: linear-gradient(to right top, #7A28CB, #7A28FF);
+.body-pane {
+    -fx-background-color: linear-gradient(to right bottom, #5851db, #833ab4);
 }
-
-.body-minuman-pane {
-    -fx-background-color: #373F51;
-}
-
-.body-cemilan-pane {
-    -fx-background-color: #080357;
-}
-
-.body-lainnya-pane {
-    -fx-background-color: #2E5EAA;
-}
-
-.all-menu {
-    -fx-border-width: 2;
-    -fx-border-color: white;
-    -fx-border-radius: 10pt;
-}
-

@@ -52,9 +52,9 @@ public class AppController implements Initializable {
         lainnyaPane = new FlowPane();
 
         setRamenPane(Menu.menus("ramen"));
-        setAllMenuPane(Menu.menus("minuman"), minumanPane, "body-minuman-pane");
-        setAllMenuPane(Menu.menus("cemilan"), cemilanPane, "body-cemilan-pane");
-        setAllMenuPane(Menu.menus("lainnya"), lainnyaPane, "body-lainnya-pane");
+        setAllMenuPane(Menu.menus("minuman"), minumanPane);
+        setAllMenuPane(Menu.menus("cemilan"), cemilanPane);
+        setAllMenuPane(Menu.menus("lainnya"), lainnyaPane);
         mainPane.setContent(ramenPane);
 
         try {
@@ -200,6 +200,7 @@ public class AppController implements Initializable {
     private void setRamenPane(List<Menu> menuList) {
         ramenPane.setPrefWidth(800);
         ramenPane.setPrefHeight(500);
+        ramenPane.getStyleClass().add("body-pane");
 
         menuList.forEach(menu -> {
             try {
@@ -216,13 +217,13 @@ public class AppController implements Initializable {
         });
     }
 
-    private void setAllMenuPane(List<Menu> menuList, FlowPane allMenuPane, String style) {
+    private void setAllMenuPane(List<Menu> menuList, FlowPane allMenuPane) {
         allMenuPane.setPrefWidth(800);
         allMenuPane.setPrefHeight(500);
         allMenuPane.setHgap(30);
         allMenuPane.setVgap(30);
         allMenuPane.setPadding(new Insets(30,20,30,36));
-        allMenuPane.getStyleClass().add(style);
+        allMenuPane.getStyleClass().add("body-pane");
 
         menuList.forEach(menu -> {
             try {

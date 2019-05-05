@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="rootPane" alignment="CENTER" minHeight="-Infinity" prefHeight="400.0" prefWidth="677.0" styleClass="body-ramen-pane" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unindra.restoclient.controllers.RamenController">
+<VBox fx:id="rootPane" alignment="CENTER" minHeight="-Infinity" prefHeight="400.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unindra.restoclient.controllers.RamenController">
     <HBox alignment="TOP_CENTER" prefHeight="258.0" prefWidth="617.0" spacing="60.0" VBox.vgrow="ALWAYS">
         <Circle fx:id="circle" fill="DODGERBLUE" radius="100.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="ramen-image-view" />
         <VBox prefHeight="306.0" prefWidth="200.0" spacing="20.0">
