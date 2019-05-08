@@ -33,7 +33,7 @@
                 <styleClass>
                     <String fx:value="text-body" />
                     <String fx:value="text-white" />
-                    <String fx:value="harga-ramen" />
+                    <String fx:value="harga_level-ramen" />
                 </styleClass>
             </Label>
         </VBox>

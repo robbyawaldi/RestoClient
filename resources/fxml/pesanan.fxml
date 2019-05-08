@@ -18,7 +18,7 @@
         <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
-        <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="319.0" styleClass="text-body" text="Total harga:" />
+        <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="319.0" styleClass="text-body" text="Total harga_level:" />
         <Label fx:id="totalLabel" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="176.0" text="Rp0,00" GridPane.columnIndex="1">
             <styleClass>
                 <String fx:value="text-body" />

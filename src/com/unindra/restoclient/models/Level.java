@@ -10,12 +10,12 @@ import static com.unindra.restoclient.Client.gson;
 
 public class Level {
     private int level;
-    private int harga;
+    private int harga_level;
     private static final String paramUrl = "/levels";
 
-    private Level(int level, int harga) {
+    private Level(int level, int harga_level) {
         this.level = level;
-        this.harga = harga;
+        this.harga_level = harga_level;
     }
 
     private static List<Level> levelList() throws IOException {
@@ -31,15 +31,15 @@ public class Level {
         return levelList().stream().filter(l -> l.level == level).findFirst().orElse(null);
     }
 
-    public int getHarga() {
-        return harga;
+    public int getHarga_level() {
+        return harga_level;
     }
 
     @Override
     public String toString() {
         return "Level{" +
                 "level=" + level +
-                ", harga=" + harga +
+                ", harga_level=" + harga_level +
                 '}';
     }
 }

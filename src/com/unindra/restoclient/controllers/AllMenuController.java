@@ -25,7 +25,7 @@ public class AllMenuController {
 
     void setMenu(Menu menu) {
         namaLabel.setText(menu.getNama());
-        hargaLabel.setText(Rupiah.rupiah(menu.getHarga()));
+        hargaLabel.setText(Rupiah.rupiah(menu.getHarga_menu()));
 
         tambahButton.setOnAction(event -> {
             Dialog alert = new Dialog((Stage) tambahButton.getScene().getWindow());

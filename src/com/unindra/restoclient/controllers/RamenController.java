@@ -35,7 +35,7 @@ public class RamenController {
     void setMenu(Menu menu) {
         namaLabel.setText(menu.getNama().toUpperCase());
         keteranganLabel.setText(menu.getDeskripsi());
-        hargaLabel.setText(rupiah(menu.getHarga()));
+        hargaLabel.setText(rupiah(menu.getHarga_menu()));
         circle.setFill(new ImagePattern(menu.getImage()));
         levelCombo.setItems(
                 FXCollections.observableArrayList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"));
@@ -52,8 +52,8 @@ public class RamenController {
                             setText(null);
                         } else {
                             try {
-                                if (Level.level(Integer.parseInt(item)).getHarga() > 0) {
-                                    setText(item+" (+"+rupiah(Level.level(Integer.parseInt(item)).getHarga())+")");
+                                if (Level.level(Integer.parseInt(item)).getHarga_level() > 0) {
+                                    setText(item+" (+"+rupiah(Level.level(Integer.parseInt(item)).getHarga_level())+")");
                                 } else {
                                     setText(item);
                                 }

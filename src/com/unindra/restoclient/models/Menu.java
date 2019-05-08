@@ -16,14 +16,14 @@ import static com.unindra.restoclient.Rupiah.rupiah;
 public class Menu {
     private int id_menu;
     private String nama;
-    private int harga;
+    private int harga_menu;
     private String tipe;
     private String deskripsi;
 
-    public Menu(int id_menu, String nama, int harga, String tipe, String deskripsi) {
+    public Menu(int id_menu, String nama, int harga_menu, String tipe, String deskripsi) {
         this.id_menu = id_menu;
         this.nama = nama;
-        this.harga = harga;
+        this.harga_menu = harga_menu;
         this.tipe = tipe;
         this.deskripsi = deskripsi;
     }
@@ -60,8 +60,8 @@ public class Menu {
         return nama;
     }
 
-    public int getHarga() {
-        return harga;
+    public int getHarga_menu() {
+        return harga_menu;
     }
 
     public String getTipe() {
@@ -80,8 +80,8 @@ public class Menu {
         return new SimpleStringProperty(nama);
     }
 
-    public StringProperty hargaProperty() {
-        return new SimpleStringProperty(rupiah(harga));
+    public StringProperty harga_menuProperty() {
+        return new SimpleStringProperty(rupiah(harga_menu));
     }
 
     @Override
@@ -89,7 +89,7 @@ public class Menu {
         return "Menu{" +
                 "id_menu=" + id_menu +
                 ", nama='" + nama + '\'' +
-                ", harga=" + harga +
+                ", harga_menu=" + harga_menu +
                 ", deskripsi='" + deskripsi + '\'' +
                 '}';
     }

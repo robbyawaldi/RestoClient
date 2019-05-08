@@ -39,7 +39,7 @@ public class PesananController implements Initializable {
 
         namaCol.setCellValueFactory(param -> menu(param.getValue().getValue()).namaProperty());
         jumlahCol.setCellValueFactory(param -> param.getValue().getValue().jumlahProperty());
-        hargaCol.setCellValueFactory(param -> menu(param.getValue().getValue()).hargaProperty());
+        hargaCol.setCellValueFactory(param -> menu(param.getValue().getValue()).harga_menuProperty());
         totalCol.setCellValueFactory(param -> param.getValue().getValue().totalProperty());
         hapusCol.setCellValueFactory(param -> new SimpleStringProperty(""));
 
