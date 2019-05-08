@@ -2,7 +2,7 @@ package com.unindra.restoclient.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.unindra.restoclient.Dialog;
-import com.unindra.restoclient.models.Item;
+import com.unindra.restoclient.models.Pesanan;
 import com.unindra.restoclient.models.Menu;
 import com.unindra.restoclient.models.Setting;
 import javafx.application.Platform;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import static com.unindra.restoclient.Dialog.getDialogLayout;
-import static com.unindra.restoclient.models.Item.getItems;
+import static com.unindra.restoclient.models.Pesanan.getItems;
 import static com.unindra.restoclient.models.Setting.setting;
 
 public class AppController implements Initializable {
@@ -67,7 +67,7 @@ public class AppController implements Initializable {
         Thread thread = new Thread(() -> {
             while (!Thread.interrupted()) {
                 try {
-                    Item.updateItems();
+                    Pesanan.updateItems();
                     Thread.sleep(1000);
                 } catch (IOException | InterruptedException e) {
                     break;
@@ -107,7 +107,7 @@ public class AppController implements Initializable {
                     dialog.confirmation(
                             "Pesanan tidak dapat dibatalkan setelah proses pemesanan berhasil",
                             e -> {
-                                if (Item.pesan()) {
+                                if (Pesanan.pesan()) {
                                     getDialog().information(
                                             "Berhasil",
                                             "Pesanan anda berhasil! mohon tunggu pesanan disajikan");
@@ -118,9 +118,9 @@ public class AppController implements Initializable {
             });
 
             bayarButton.setOnAction(event -> {
-                if (getItems("diproses").size() == getItems().size())
-                    if (getItems().size() != 0) try {
-                        if (Item.bayar())
+                if (getItems("diproses").size() == Pesanan.getPesananList().size())
+                    if (Pesanan.getPesananList().size() != 0) try {
+                        if (Pesanan.bayar())
                             getDialog().information(
                                     "Mohon tunggu",
                                     "Kasir akan mengantarkan bill ke meja anda");

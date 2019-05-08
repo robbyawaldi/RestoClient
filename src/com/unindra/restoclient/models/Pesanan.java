@@ -19,7 +19,7 @@ import static com.unindra.restoclient.models.Level.level;
 import static com.unindra.restoclient.models.Menu.menu;
 import static com.unindra.restoclient.models.Setting.setting;
 
-public class Item extends RecursiveTreeObject<Item> {
+public class Pesanan extends RecursiveTreeObject<Pesanan> {
     private int id_item;
     private int id_menu;
     private int jumlah_item;
@@ -27,12 +27,12 @@ public class Item extends RecursiveTreeObject<Item> {
     private String no_meja;
     private String status_item;
     @Expose
-    private static final String paramUrl = "/items";
+    private static final String paramUrl = "/pesanans";
     @Expose
-    private static ObservableList<Item> items = FXCollections.observableArrayList();
+    private static ObservableList<Pesanan> pesanans = FXCollections.observableArrayList();
 
     // Constructor
-    private Item(int id_menu, int jumlah_item, int lvl_item, String no_meja, String status_item) {
+    private Pesanan(int id_menu, int jumlah_item, int lvl_item, String no_meja, String status_item) {
         this.id_item = 0;
         this.id_menu = id_menu;
         this.jumlah_item = jumlah_item;
@@ -41,11 +41,11 @@ public class Item extends RecursiveTreeObject<Item> {
         this.status_item = status_item;
     }
 
-    public Item(Menu menu, int jumlah_item) {
+    public Pesanan(Menu menu, int jumlah_item) {
         this(menu.getId_menu(), jumlah_item, 0, setting().getNo_meja(), "belum dipesan");
     }
 
-    public Item(Menu menu, int jumlah_item, int lvl_item) {
+    public Pesanan(Menu menu, int jumlah_item, int lvl_item) {
         this(menu.getId_menu(), jumlah_item, lvl_item, setting().getNo_meja(), "belum dipesan");
     }
 
@@ -54,9 +54,9 @@ public class Item extends RecursiveTreeObject<Item> {
         StandardResponse standardResponse = get(paramUrl + "/" + setting().getNo_meja());
         if (standardResponse.getStatus() == StatusResponse.SUCCESS) {
             if (standardResponse.getMessage() == null) {
-                Item[] items = gson().fromJson(standardResponse.getData(), Item[].class);
-                for (Item item : items) item.setChildren(FXCollections.observableArrayList());
-                Item.items.setAll(items);
+                Pesanan[] pesanans = gson().fromJson(standardResponse.getData(), Pesanan[].class);
+                for (Pesanan pesanan : pesanans) pesanan.setChildren(FXCollections.observableArrayList());
+                Pesanan.pesanans.setAll(pesanans);
             }
         }
     }
@@ -99,12 +99,12 @@ public class Item extends RecursiveTreeObject<Item> {
     }
 
     // Getter
-    public static ObservableList<Item> getItems() {
-        return items;
+    public static ObservableList<Pesanan> getPesananList() {
+        return pesanans;
     }
 
-    public static List<Item> getItems(String status_item) {
-        return getItems()
+    public static List<Pesanan> getItems(String status_item) {
+        return getPesananList()
                 .stream()
                 .filter(item -> item.getStatus_item().equals(status_item))
                 .collect(Collectors.toList());
@@ -119,7 +119,7 @@ public class Item extends RecursiveTreeObject<Item> {
     }
 
     public static int getGrandTotal() {
-        return getItems().stream().mapToInt(Item::getTotal).sum();
+        return getPesananList().stream().mapToInt(Pesanan::getTotal).sum();
     }
 
     int getId_menu() {
@@ -145,7 +145,7 @@ public class Item extends RecursiveTreeObject<Item> {
 
     @Override
     public String toString() {
-        return "Item{" +
+        return "Pesanan{" +
                 "id_item=" + id_item +
                 ", id_menu=" + id_menu +
                 ", jumlah_item=" + jumlah_item +

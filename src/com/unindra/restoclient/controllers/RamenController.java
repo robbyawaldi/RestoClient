@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.unindra.restoclient.Rupiah.rupiah;
-import static com.unindra.restoclient.models.Item.getItems;
+import static com.unindra.restoclient.models.Pesanan.getItems;
 
 public class RamenController {
     public VBox rootPane;
@@ -71,8 +71,8 @@ public class RamenController {
 
             if (getItems("dibayar").isEmpty()) {
                 if (!levelCombo.getSelectionModel().isEmpty()) {
-                    Item item = new Item(menu, jumlah.get(), Integer.parseInt(levelCombo.getValue()));
-                    StandardResponse standardResponse = item.post();
+                    Pesanan pesanan = new Pesanan(menu, jumlah.get(), Integer.parseInt(levelCombo.getValue()));
+                    StandardResponse standardResponse = pesanan.post();
                     if (standardResponse.getStatus() == StatusResponse.SUCCESS)
                         alert.information(
                                 "Berhasil",

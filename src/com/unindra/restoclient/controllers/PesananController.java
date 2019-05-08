@@ -5,7 +5,7 @@ import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import com.unindra.restoclient.Dialog;
-import com.unindra.restoclient.models.Item;
+import com.unindra.restoclient.models.Pesanan;
 import com.unindra.restoclient.models.StatusResponse;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -22,21 +22,20 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import static com.unindra.restoclient.Rupiah.rupiah;
-import static com.unindra.restoclient.models.Item.getItems;
 import static com.unindra.restoclient.models.Menu.menu;
 
 public class PesananController implements Initializable {
 
-    public JFXTreeTableView<Item> pesananTableView;
+    public JFXTreeTableView<Pesanan> pesananTableView;
     public Label totalLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        TreeTableColumn<Item, String> namaCol = new TreeTableColumn<>("Nama");
-        TreeTableColumn<Item, Integer> jumlahCol = new TreeTableColumn<>("Jumlah");
-        TreeTableColumn<Item, String> hargaCol = new TreeTableColumn<>("Harga");
-        TreeTableColumn<Item, String> totalCol = new TreeTableColumn<>("Total");
-        TreeTableColumn<Item, String> hapusCol = new TreeTableColumn<>("Status");
+        TreeTableColumn<Pesanan, String> namaCol = new TreeTableColumn<>("Nama");
+        TreeTableColumn<Pesanan, Integer> jumlahCol = new TreeTableColumn<>("Jumlah");
+        TreeTableColumn<Pesanan, String> hargaCol = new TreeTableColumn<>("Harga");
+        TreeTableColumn<Pesanan, String> totalCol = new TreeTableColumn<>("Total");
+        TreeTableColumn<Pesanan, String> hapusCol = new TreeTableColumn<>("Status");
 
         namaCol.setCellValueFactory(param -> menu(param.getValue().getValue()).namaProperty());
         jumlahCol.setCellValueFactory(param -> param.getValue().getValue().jumlahProperty());
@@ -44,17 +43,17 @@ public class PesananController implements Initializable {
         totalCol.setCellValueFactory(param -> param.getValue().getValue().totalProperty());
         hapusCol.setCellValueFactory(param -> new SimpleStringProperty(""));
 
-        namaCol.setCellFactory(new Callback<TreeTableColumn<Item, String>, TreeTableCell<Item, String>>() {
+        namaCol.setCellFactory(new Callback<TreeTableColumn<Pesanan, String>, TreeTableCell<Pesanan, String>>() {
             @Override
-            public TreeTableCell<Item, String> call(TreeTableColumn<Item, String> param) {
-                return new TreeTableCell<Item, String>() {
+            public TreeTableCell<Pesanan, String> call(TreeTableColumn<Pesanan, String> param) {
+                return new TreeTableCell<Pesanan, String>() {
                     @Override
                     protected void updateItem(String item, boolean empty) {
                         super.updateItem(item, empty);
                         if (item == null) {
                             setText(null);
                         } else {
-                            Item i = getItems().get(getIndex());
+                            Pesanan i = Pesanan.getPesananList().get(getIndex());
                             if (menu(i).getTipe_menu().equals("ramen"))
                                 setText(item + " lv." + i.getLevel_item());
                             else setText(item);
@@ -64,10 +63,10 @@ public class PesananController implements Initializable {
             }
         });
 
-        hapusCol.setCellFactory(new Callback<TreeTableColumn<Item, String>, TreeTableCell<Item, String>>() {
+        hapusCol.setCellFactory(new Callback<TreeTableColumn<Pesanan, String>, TreeTableCell<Pesanan, String>>() {
             @Override
-            public TreeTableCell<Item, String> call(TreeTableColumn<Item, String> param) {
-                return new TreeTableCell<Item, String>() {
+            public TreeTableCell<Pesanan, String> call(TreeTableColumn<Pesanan, String> param) {
+                return new TreeTableCell<Pesanan, String>() {
                     final JFXButton button = new JFXButton("hapus");
                     @Override
                     protected void updateItem(String item, boolean empty) {
@@ -76,7 +75,7 @@ public class PesananController implements Initializable {
                             setText(null);
                             setGraphic(null);
                         } else {
-                            Item thisItem = getItems().get(getIndex());
+                            Pesanan thisPesanan = Pesanan.getPesananList().get(getIndex());
 
                             button.setFocusTraversable(false);
                             button.getStyleClass().add("hapus");
@@ -86,13 +85,13 @@ public class PesananController implements Initializable {
                                 alert.confirmation(
                                         "Anda yakin ingin menghapus pesanan ini?",
                                         e -> {
-                                            if (thisItem.delete().getStatus() == StatusResponse.SUCCESS)
+                                            if (thisPesanan.delete().getStatus() == StatusResponse.SUCCESS)
                                                 alert.getDialog().hide();
                                         });
                             });
 
-                            if (!thisItem.getStatus_item().equals("belum dipesan")) {
-                                setText(thisItem.getStatus_item());
+                            if (!thisPesanan.getStatus_item().equals("belum dipesan")) {
+                                setText(thisPesanan.getStatus_item());
                                 setGraphic(null);
                             } else {
                                 setText(null);
@@ -104,10 +103,10 @@ public class PesananController implements Initializable {
             }
         });
 
-        getItems().addListener((ListChangeListener<Item>) c ->
-                Platform.runLater(() -> totalLabel.setText(rupiah(Item.getGrandTotal()))));
+        Pesanan.getPesananList().addListener((ListChangeListener<Pesanan>) c ->
+                Platform.runLater(() -> totalLabel.setText(rupiah(Pesanan.getGrandTotal()))));
 
-        pesananTableView.setRoot(new RecursiveTreeItem<>(getItems(), RecursiveTreeObject::getChildren));
+        pesananTableView.setRoot(new RecursiveTreeItem<>(Pesanan.getPesananList(), RecursiveTreeObject::getChildren));
         pesananTableView.getColumns().add(namaCol);
         pesananTableView.getColumns().add(jumlahCol);
         pesananTableView.getColumns().add(hargaCol);

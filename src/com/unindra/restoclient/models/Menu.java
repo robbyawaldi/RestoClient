@@ -44,10 +44,10 @@ public class Menu {
                 .collect(Collectors.toList());
     }
 
-    public static Menu menu(Item item) {
+    public static Menu menu(Pesanan pesanan) {
         return menus()
                 .stream()
-                .filter(menu -> menu.id_menu == item.getId_menu())
+                .filter(menu -> menu.id_menu == pesanan.getId_menu())
                 .findFirst()
                 .orElse(null);
     }

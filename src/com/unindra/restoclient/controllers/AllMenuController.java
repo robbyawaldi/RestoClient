@@ -3,7 +3,7 @@ package com.unindra.restoclient.controllers;
 import com.jfoenix.controls.JFXButton;
 import com.unindra.restoclient.Dialog;
 import com.unindra.restoclient.Rupiah;
-import com.unindra.restoclient.models.Item;
+import com.unindra.restoclient.models.Pesanan;
 import com.unindra.restoclient.models.Menu;
 import com.unindra.restoclient.models.StandardResponse;
 import com.unindra.restoclient.models.StatusResponse;
@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.unindra.restoclient.models.Item.getItems;
+import static com.unindra.restoclient.models.Pesanan.getItems;
 
 public class AllMenuController {
 
@@ -31,8 +31,8 @@ public class AllMenuController {
             Dialog alert = new Dialog((Stage) tambahButton.getScene().getWindow());
 
             if (getItems("dibayar").isEmpty()) {
-                Item item = new Item(menu, jumlah.get());
-                StandardResponse standardResponse = item.post();
+                Pesanan pesanan = new Pesanan(menu, jumlah.get());
+                StandardResponse standardResponse = pesanan.post();
                 if (standardResponse.getStatus() == StatusResponse.SUCCESS)
                     alert.information(
                             "Berhasil",
