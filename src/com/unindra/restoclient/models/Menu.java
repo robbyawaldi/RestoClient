@@ -15,16 +15,16 @@ import static com.unindra.restoclient.Rupiah.rupiah;
 
 public class Menu {
     private int id_menu;
-    private String nama_menu;
-    private int harga_menu;
-    private String tipe_menu;
+    private String nama;
+    private int harga;
+    private String tipe;
     private String deskripsi;
 
-    public Menu(int id_menu, String nama_menu, int harga_menu, String type, String deskripsi) {
+    public Menu(int id_menu, String nama, int harga, String tipe, String deskripsi) {
         this.id_menu = id_menu;
-        this.nama_menu = nama_menu;
-        this.harga_menu = harga_menu;
-        this.tipe_menu = type;
+        this.nama = nama;
+        this.harga = harga;
+        this.tipe = tipe;
         this.deskripsi = deskripsi;
     }
 
@@ -37,10 +37,10 @@ public class Menu {
         }
     }
 
-    public static List<Menu> menus(String type) {
+    public static List<Menu> menus(String tipe) {
         return menus()
                 .stream()
-                .filter(menu -> menu.tipe_menu.equals(type))
+                .filter(menu -> menu.tipe.equals(tipe))
                 .collect(Collectors.toList());
     }
 
@@ -56,16 +56,16 @@ public class Menu {
         return id_menu;
     }
 
-    public String getNama_menu() {
-        return nama_menu;
+    public String getNama() {
+        return nama;
     }
 
-    public int getHarga_menu() {
-        return harga_menu;
+    public int getHarga() {
+        return harga;
     }
 
-    public String getTipe_menu() {
-        return tipe_menu;
+    public String getTipe() {
+        return tipe;
     }
 
     public String getDeskripsi() {
@@ -73,23 +73,23 @@ public class Menu {
     }
 
     public Image getImage() {
-        return new Image(String.format("/img/%s.jpg", nama_menu));
+        return new Image(String.format("/img/%s.jpg", nama));
     }
 
     public StringProperty namaProperty() {
-        return new SimpleStringProperty(nama_menu);
+        return new SimpleStringProperty(nama);
     }
 
     public StringProperty hargaProperty() {
-        return new SimpleStringProperty(rupiah(harga_menu));
+        return new SimpleStringProperty(rupiah(harga));
     }
 
     @Override
     public String toString() {
         return "Menu{" +
                 "id_menu=" + id_menu +
-                ", nama_menu='" + nama_menu + '\'' +
-                ", harga_menu=" + harga_menu +
+                ", nama='" + nama + '\'' +
+                ", harga=" + harga +
                 ", deskripsi='" + deskripsi + '\'' +
                 '}';
     }
