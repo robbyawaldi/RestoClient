@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import static com.unindra.restoclient.Dialog.getDialogLayout;
-import static com.unindra.restoclient.models.Pesanan.getItems;
+import static com.unindra.restoclient.models.Pesanan.getPesananList;
 import static com.unindra.restoclient.models.Setting.setting;
 
 public class AppController implements Initializable {
@@ -67,7 +67,7 @@ public class AppController implements Initializable {
         Thread thread = new Thread(() -> {
             while (!Thread.interrupted()) {
                 try {
-                    Pesanan.updateItems();
+                    Pesanan.updatePesanan();
                     Thread.sleep(1000);
                 } catch (IOException | InterruptedException e) {
                     break;
@@ -102,7 +102,7 @@ public class AppController implements Initializable {
                                     keluarButton));
 
             pesanButton.setOnAction(event -> {
-                if (!getItems("belum dipesan").isEmpty()) {
+                if (!getPesananList("belum dipesan").isEmpty()) {
                     Dialog dialog = getDialog();
                     dialog.confirmation(
                             "Pesanan tidak dapat dibatalkan setelah proses pemesanan berhasil",
@@ -118,7 +118,7 @@ public class AppController implements Initializable {
             });
 
             bayarButton.setOnAction(event -> {
-                if (getItems("diproses").size() == Pesanan.getPesananList().size())
+                if (getPesananList("diproses").size() == Pesanan.getPesananList().size())
                     if (Pesanan.getPesananList().size() != 0) try {
                         if (Pesanan.bayar())
                             getDialog().information(

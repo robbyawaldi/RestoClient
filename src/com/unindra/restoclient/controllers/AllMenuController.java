@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.unindra.restoclient.models.Pesanan.getItems;
+import static com.unindra.restoclient.models.Pesanan.getPesananList;
 
 public class AllMenuController {
 
@@ -30,7 +30,7 @@ public class AllMenuController {
         tambahButton.setOnAction(event -> {
             Dialog alert = new Dialog((Stage) tambahButton.getScene().getWindow());
 
-            if (getItems("dibayar").isEmpty()) {
+            if (getPesananList("dibayar").isEmpty()) {
                 Pesanan pesanan = new Pesanan(menu, jumlah.get());
                 StandardResponse standardResponse = pesanan.post();
                 if (standardResponse.getStatus() == StatusResponse.SUCCESS)
