@@ -55,7 +55,7 @@ public class PesananController implements Initializable {
                         } else {
                             Pesanan i = Pesanan.getPesananList().get(getIndex());
                             if (menu(i).getTipe_menu().equals("ramen"))
-                                setText(item + " lv." + i.getLevel_item());
+                                setText(item + " lv." + i.getLevel());
                             else setText(item);
                         }
                     }

@@ -22,8 +22,8 @@ import static com.unindra.restoclient.models.Setting.setting;
 public class Pesanan extends RecursiveTreeObject<Pesanan> {
     private int id_item;
     private int id_menu;
-    private int jumlah_item;
-    private int level_item;
+    private int jumlah;
+    private int level;
     private String no_meja;
     private String status_item;
     @Expose
@@ -32,21 +32,21 @@ public class Pesanan extends RecursiveTreeObject<Pesanan> {
     private static ObservableList<Pesanan> pesanans = FXCollections.observableArrayList();
 
     // Constructor
-    private Pesanan(int id_menu, int jumlah_item, int lvl_item, String no_meja, String status_item) {
+    private Pesanan(int id_menu, int jumlah, int lvl_item, String no_meja, String status_item) {
         this.id_item = 0;
         this.id_menu = id_menu;
-        this.jumlah_item = jumlah_item;
-        this.level_item = lvl_item;
+        this.jumlah = jumlah;
+        this.level = lvl_item;
         this.no_meja = no_meja;
         this.status_item = status_item;
     }
 
-    public Pesanan(Menu menu, int jumlah_item) {
-        this(menu.getId_menu(), jumlah_item, 0, setting().getNo_meja(), "belum dipesan");
+    public Pesanan(Menu menu, int jumlah) {
+        this(menu.getId_menu(), jumlah, 0, setting().getNo_meja(), "belum dipesan");
     }
 
-    public Pesanan(Menu menu, int jumlah_item, int lvl_item) {
-        this(menu.getId_menu(), jumlah_item, lvl_item, setting().getNo_meja(), "belum dipesan");
+    public Pesanan(Menu menu, int jumlah, int lvl_item) {
+        this(menu.getId_menu(), jumlah, lvl_item, setting().getNo_meja(), "belum dipesan");
     }
 
     // Sinkronisasi collections dengan server
@@ -112,7 +112,7 @@ public class Pesanan extends RecursiveTreeObject<Pesanan> {
 
     private int getTotal() {
         try {
-            return (menu(this)).getHarga_menu() + level(level_item).getHarga_level() * jumlah_item;
+            return (menu(this)).getHarga_menu() + level(level).getHarga_level() * jumlah;
         } catch (IOException e) {
             return 0;
         }
@@ -126,8 +126,8 @@ public class Pesanan extends RecursiveTreeObject<Pesanan> {
         return id_menu;
     }
 
-    public int getLevel_item() {
-        return level_item;
+    public int getLevel() {
+        return level;
     }
 
     public String getStatus_item() {
@@ -136,7 +136,7 @@ public class Pesanan extends RecursiveTreeObject<Pesanan> {
 
     // Property
     public ObjectProperty<Integer> jumlahProperty() {
-        return new SimpleObjectProperty<>(jumlah_item);
+        return new SimpleObjectProperty<>(jumlah);
     }
 
     public StringProperty totalProperty() {
@@ -148,8 +148,8 @@ public class Pesanan extends RecursiveTreeObject<Pesanan> {
         return "Pesanan{" +
                 "id_item=" + id_item +
                 ", id_menu=" + id_menu +
-                ", jumlah_item=" + jumlah_item +
-                ", level_item=" + level_item +
+                ", jumlah=" + jumlah +
+                ", level=" + level +
                 ", no_meja=" + no_meja +
                 ", status_item='" + status_item + '\'' +
                 '}';
