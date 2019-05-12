@@ -14,7 +14,7 @@
 <VBox fx:id="rootPane" alignment="CENTER" minHeight="-Infinity" prefHeight="400.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unindra.restoclient.controllers.RamenController">
     <HBox alignment="TOP_CENTER" prefHeight="258.0" prefWidth="617.0" spacing="60.0" VBox.vgrow="ALWAYS">
         <Circle fx:id="circle" fill="DODGERBLUE" radius="100.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="ramen-image-view" />
-        <VBox prefHeight="306.0" prefWidth="200.0" spacing="20.0">
+        <VBox prefHeight="276.0" prefWidth="239.0" spacing="20.0">
             <Label fx:id="namaLabel" text="Nama Makanan">
                 <styleClass>
                     <String fx:value="text-body" />
@@ -23,7 +23,7 @@
                     <String fx:value="nama-ramen" />
                 </styleClass>
             </Label>
-            <Label fx:id="keteranganLabel" alignment="TOP_LEFT" prefHeight="97.0" prefWidth="189.0" text="keterangan" textAlignment="JUSTIFY">
+            <Label fx:id="keteranganLabel" alignment="TOP_LEFT" prefHeight="105.0" prefWidth="239.0" text="keterangan" wrapText="true">
                 <styleClass>
                     <String fx:value="text-body" />
                     <String fx:value="text-white" />
@@ -33,7 +33,7 @@
                 <styleClass>
                     <String fx:value="text-body" />
                     <String fx:value="text-white" />
-                    <String fx:value="harga_level-ramen" />
+                    <String fx:value="harga-ramen" />
                 </styleClass>
             </Label>
         </VBox>

@@ -77,7 +77,7 @@
 }
 
 .ramen-pressed, .minuman-pressed, .cemilan-pressed, .lainnya-pressed, .pesanan-button-pressed {
-    -fx-background-color: linear-gradient(to right bottom, #405de6, #5851db, #833ab4);
+    -fx-background-color: linear-gradient(to right bottom, #405de6, #5851db);
     -fx-text-fill: white;
 }
 

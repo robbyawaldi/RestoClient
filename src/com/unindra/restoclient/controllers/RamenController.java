@@ -82,10 +82,10 @@ public class RamenController {
                             "Pesanan anda gagal diproses");
                 } else alert.information(
                         "Gagal",
-                        "Proses pembayaran belum selesai");
+                        "Level belum dimasukkan");
             } else alert.information(
                     "Gagal",
-                    "Level belum dimasukkan");
+                    "Proses pembayaran belum selesai");
             reset();
         });
     }
