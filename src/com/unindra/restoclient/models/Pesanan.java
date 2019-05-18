@@ -53,11 +53,9 @@ public class Pesanan extends RecursiveTreeObject<Pesanan> {
     public static void updatePesanan() throws IOException {
         StandardResponse standardResponse = get(paramUrl + "/" + setting().getNo_meja());
         if (standardResponse.getStatus() == StatusResponse.SUCCESS) {
-            if (standardResponse.getMessage() == null) {
-                Pesanan[] pesanans = gson().fromJson(standardResponse.getData(), Pesanan[].class);
-                for (Pesanan pesanan : pesanans) pesanan.setChildren(FXCollections.observableArrayList());
-                Pesanan.pesananList.setAll(pesanans);
-            }
+            Pesanan[] pesananArrays = gson().fromJson(standardResponse.getData(), Pesanan[].class);
+            for (Pesanan pesanan : pesananArrays) pesanan.setChildren(FXCollections.observableArrayList());
+            Pesanan.pesananList.setAll(pesananArrays);
         }
     }
 

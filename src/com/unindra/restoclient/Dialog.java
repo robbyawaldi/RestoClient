@@ -4,6 +4,7 @@ import com.jfoenix.animation.alert.JFXAlertAnimation;
 import com.jfoenix.controls.JFXAlert;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialogLayout;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -34,27 +35,31 @@ public class Dialog {
     }
 
     public void information(String header, String body) {
-        JFXButton okButton = new JFXButton("Ok");
-        okButton.setOnAction(event -> dialog.hide());
-        dialog.setContent(getDialogLayout(
-                new Label(header),
-                new Label(body),
-                okButton
-        ));
-        dialog.show();
+        Platform.runLater(() -> {
+            JFXButton okButton = new JFXButton("Ok");
+            okButton.setOnAction(event -> dialog.hide());
+            dialog.setContent(getDialogLayout(
+                    new Label(header),
+                    new Label(body),
+                    okButton
+            ));
+            dialog.show();
+        });
     }
 
     public void confirmation(String body, EventHandler<ActionEvent> eventConfirm) {
-        JFXButton yaButton = new JFXButton("Ya");
-        JFXButton batalButton = new JFXButton("Batal");
-        yaButton.setOnAction(eventConfirm);
-        batalButton.setOnAction(event -> dialog.hide());
-        dialog.setContent(getDialogLayout(
-                new Label("Konfirmasi"),
-                new Label(body),
-                yaButton,
-                batalButton
-        ));
-        dialog.show();
+        Platform.runLater(() -> {
+            JFXButton yaButton = new JFXButton("Ya");
+            JFXButton batalButton = new JFXButton("Batal");
+            yaButton.setOnAction(eventConfirm);
+            batalButton.setOnAction(event -> dialog.hide());
+            dialog.setContent(getDialogLayout(
+                    new Label("Konfirmasi"),
+                    new Label(body),
+                    yaButton,
+                    batalButton
+            ));
+            dialog.show();
+        });
     }
 }

@@ -85,52 +85,48 @@ public class AppController implements Initializable {
         });
         thread.start();
 
-        // Daftar Pesanan
-        Platform.runLater(() -> {
-            pesananDialog = getDialog();
-            JFXButton pesanButton = new JFXButton("Pesan");
-            JFXButton bayarButton = new JFXButton("Bayar");
-            JFXButton keluarButton = new JFXButton("Keluar");
+        Platform.runLater(() -> pesananDialog = getDialog());
+        JFXButton pesanButton = new JFXButton("Pesan");
+        JFXButton bayarButton = new JFXButton("Bayar");
+        JFXButton keluarButton = new JFXButton("Keluar");
 
-            pesananDialog.getDialog()
-                    .setContent(
-                            getDialogLayout(
-                                    new Label("Daftar Pesanan"),
-                                    pesananPane,
-                                    pesanButton,
-                                    bayarButton,
-                                    keluarButton));
+        Platform.runLater(() -> pesananDialog.getDialog()
+                .setContent(
+                        getDialogLayout(
+                                new Label("Daftar Pesanan"),
+                                pesananPane,
+                                pesanButton,
+                                bayarButton,
+                                keluarButton)));
 
-            pesanButton.setOnAction(event -> {
-                if (!getPesananList("belum dipesan").isEmpty()) {
-                    Dialog dialog = getDialog();
-                    dialog.confirmation(
-                            "Pesanan tidak dapat dibatalkan setelah proses pemesanan berhasil",
-                            e -> {
-                                if (Pesanan.pesan()) {
-                                    getDialog().information(
-                                            "Berhasil",
-                                            "Pesanan anda berhasil! mohon tunggu pesanan disajikan");
-                                    dialog.getDialog().hide();
-                                }
-                            });
-                }
-            });
-
-            bayarButton.setOnAction(event -> {
-                if (getPesananList("diproses").size() == Pesanan.getPesananList().size())
-                    if (Pesanan.getPesananList().size() != 0) try {
-                        if (Pesanan.bayar())
-                            getDialog().information(
-                                    "Mohon tunggu",
-                                    "Kasir akan mengantarkan bill ke meja anda");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-            });
-
-            keluarButton.setOnAction(event -> pesananDialog.getDialog().hide());
+        pesanButton.setOnAction(event -> {
+            if (!getPesananList("belum dipesan").isEmpty()) {
+                Dialog dialog = getDialog();
+                dialog.confirmation(
+                        "Pesanan tidak dapat dibatalkan setelah proses pemesanan berhasil",
+                        e -> {
+                            if (Pesanan.pesan()) {
+                                dialog.information(
+                                        "Berhasil",
+                                        "Pesanan anda berhasil! mohon tunggu pesanan disajikan");
+                            }
+                        });
+            }
         });
+
+        bayarButton.setOnAction(event -> {
+            if (getPesananList("diproses").size() == Pesanan.getPesananList().size())
+                if (Pesanan.getPesananList().size() != 0) try {
+                    if (Pesanan.bayar())
+                        getDialog().information(
+                                "Mohon tunggu",
+                                "Kasir akan mengantarkan bill ke meja anda");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+        });
+
+        keluarButton.setOnAction(event -> pesananDialog.getDialog().hide());
 
     }
 
@@ -157,7 +153,7 @@ public class AppController implements Initializable {
     }
 
     public void daftarPesananHandle() {
-        pesananDialog.getDialog().show();
+        Platform.runLater(() -> pesananDialog.getDialog().show());
     }
 
     public void settingHandle(MouseEvent mouseEvent) {
