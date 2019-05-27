@@ -8,12 +8,14 @@ import javafx.collections.FXCollections;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -33,10 +35,20 @@ public class RamenController {
     private AtomicInteger jumlah = new AtomicInteger(1);
 
     void setMenu(Menu menu) {
-        namaLabel.setText(menu.getNama().toUpperCase());
-        keteranganLabel.setText(menu.getDeskripsi());
+        namaLabel.setText(menu.getNama_menu().toUpperCase());
         hargaLabel.setText(rupiah(menu.getHarga_menu()));
-        circle.setFill(new ImagePattern(menu.getImage()));
+
+        try {
+            DetailRamen detailRamen = DetailRamen.detailRamen(menu.getNama_menu());
+            if (detailRamen != null) {
+                keteranganLabel.setText(detailRamen.getDeskripsi());
+                Image image = new Image(new ByteArrayInputStream(detailRamen.getFoto()));
+                circle.setFill(new ImagePattern(image));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         levelCombo.setItems(
                 FXCollections.observableArrayList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"));
 

@@ -3,7 +3,6 @@ package com.unindra.restoclient.models;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
-import javafx.scene.image.Image;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,18 +13,14 @@ import static com.unindra.restoclient.Client.gson;
 import static com.unindra.restoclient.Rupiah.rupiah;
 
 public class Menu {
-    private int id_menu;
-    private String nama;
+    private String nama_menu;
     private int harga_menu;
     private String tipe;
-    private String deskripsi;
 
-    public Menu(int id_menu, String nama, int harga_menu, String tipe, String deskripsi) {
-        this.id_menu = id_menu;
-        this.nama = nama;
+    public Menu(String nama_menu, int harga_menu, String tipe) {
+        this.nama_menu = nama_menu;
         this.harga_menu = harga_menu;
         this.tipe = tipe;
-        this.deskripsi = deskripsi;
     }
 
     private static List<Menu> menus() {
@@ -47,17 +42,13 @@ public class Menu {
     public static Menu menu(Pesanan pesanan) {
         return menus()
                 .stream()
-                .filter(menu -> menu.id_menu == pesanan.getId_menu())
+                .filter(menu -> menu.nama_menu.equals(pesanan.getNama_menu()))
                 .findFirst()
                 .orElse(null);
     }
 
-    int getId_menu() {
-        return id_menu;
-    }
-
-    public String getNama() {
-        return nama;
+    public String getNama_menu() {
+        return nama_menu;
     }
 
     public int getHarga_menu() {
@@ -68,16 +59,8 @@ public class Menu {
         return tipe;
     }
 
-    public String getDeskripsi() {
-        return deskripsi;
-    }
-
-    public Image getImage() {
-        return new Image(String.format("/img/%s.jpg", nama));
-    }
-
-    public StringProperty namaProperty() {
-        return new SimpleStringProperty(nama);
+    public StringProperty nama_menuProperty() {
+        return new SimpleStringProperty(nama_menu);
     }
 
     public StringProperty harga_menuProperty() {
@@ -87,10 +70,8 @@ public class Menu {
     @Override
     public String toString() {
         return "Menu{" +
-                "id_menu=" + id_menu +
-                ", nama='" + nama + '\'' +
+                ", nama_menu='" + nama_menu + '\'' +
                 ", harga_menu=" + harga_menu +
-                ", deskripsi='" + deskripsi + '\'' +
                 '}';
     }
 }

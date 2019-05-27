@@ -24,7 +24,7 @@ public class AllMenuController {
     private AtomicInteger jumlah = new AtomicInteger(1);
 
     void setMenu(Menu menu) {
-        namaLabel.setText(menu.getNama());
+        namaLabel.setText(menu.getNama_menu());
         hargaLabel.setText(Rupiah.rupiah(menu.getHarga_menu()));
 
         tambahButton.setOnAction(event -> {

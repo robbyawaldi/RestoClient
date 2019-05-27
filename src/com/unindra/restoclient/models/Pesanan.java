@@ -20,8 +20,8 @@ import static com.unindra.restoclient.models.Menu.menu;
 import static com.unindra.restoclient.models.Setting.setting;
 
 public class Pesanan extends RecursiveTreeObject<Pesanan> {
-    private int id_pesanan;
-    private int id_menu;
+    private String id_pesanan;
+    private String nama_menu;
     private int jumlah;
     private int level;
     private String no_meja;
@@ -32,9 +32,9 @@ public class Pesanan extends RecursiveTreeObject<Pesanan> {
     private static ObservableList<Pesanan> pesananList = FXCollections.observableArrayList();
 
     // Constructor
-    private Pesanan(int id_menu, int jumlah, int lvl_item, String no_meja, String status_item) {
-        this.id_pesanan = 0;
-        this.id_menu = id_menu;
+    private Pesanan(String nama_menu, int jumlah, int lvl_item, String no_meja, String status_item) {
+        this.id_pesanan = "";
+        this.nama_menu = nama_menu;
         this.jumlah = jumlah;
         this.level = lvl_item;
         this.no_meja = no_meja;
@@ -42,11 +42,11 @@ public class Pesanan extends RecursiveTreeObject<Pesanan> {
     }
 
     public Pesanan(Menu menu, int jumlah) {
-        this(menu.getId_menu(), jumlah, 0, setting().getNo_meja(), "belum dipesan");
+        this(menu.getNama_menu(), jumlah, 0, setting().getNo_meja(), "belum dipesan");
     }
 
     public Pesanan(Menu menu, int jumlah, int lvl_item) {
-        this(menu.getId_menu(), jumlah, lvl_item, setting().getNo_meja(), "belum dipesan");
+        this(menu.getNama_menu(), jumlah, lvl_item, setting().getNo_meja(), "belum dipesan");
     }
 
     // Sinkronisasi collections dengan server
@@ -120,8 +120,8 @@ public class Pesanan extends RecursiveTreeObject<Pesanan> {
         return getPesananList().stream().mapToInt(Pesanan::getTotal).sum();
     }
 
-    int getId_menu() {
-        return id_menu;
+    String getNama_menu() {
+        return nama_menu;
     }
 
     public int getLevel() {
@@ -145,7 +145,7 @@ public class Pesanan extends RecursiveTreeObject<Pesanan> {
     public String toString() {
         return "Pesanan{" +
                 "id_pesanan=" + id_pesanan +
-                ", id_menu=" + id_menu +
+                ", nama_menu=" + nama_menu +
                 ", jumlah=" + jumlah +
                 ", level=" + level +
                 ", no_meja=" + no_meja +

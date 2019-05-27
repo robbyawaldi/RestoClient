@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unindra.restoclient.controllers.testController">
+    <Label fx:id="deskripsi" layoutX="383.0" layoutY="120.0" text="Label"/>
+    <ImageView fx:id="foto" fitHeight="150.0" fitWidth="200.0" layoutX="125.0" layoutY="72.0" pickOnBounds="true"
+               preserveRatio="true"/>
+</AnchorPane>

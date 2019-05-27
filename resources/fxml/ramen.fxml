@@ -20,7 +20,7 @@
                     <String fx:value="text-body" />
                     <String fx:value="text-white" />
                     <String fx:value="text-bold" />
-                    <String fx:value="nama-ramen" />
+                    <String fx:value="nama_menu-ramen" />
                 </styleClass>
             </Label>
             <Label fx:id="keteranganLabel" alignment="TOP_LEFT" prefHeight="105.0" prefWidth="239.0" text="keterangan" wrapText="true">

@@ -37,7 +37,7 @@ public class PesananController implements Initializable {
         TreeTableColumn<Pesanan, String> totalCol = new TreeTableColumn<>("Total");
         TreeTableColumn<Pesanan, String> hapusCol = new TreeTableColumn<>("Status");
 
-        namaCol.setCellValueFactory(param -> menu(param.getValue().getValue()).namaProperty());
+        namaCol.setCellValueFactory(param -> menu(param.getValue().getValue()).nama_menuProperty());
         jumlahCol.setCellValueFactory(param -> param.getValue().getValue().jumlahProperty());
         hargaCol.setCellValueFactory(param -> menu(param.getValue().getValue()).harga_menuProperty());
         totalCol.setCellValueFactory(param -> param.getValue().getValue().totalProperty());
